@@ -1,0 +1,302 @@
+time: [2020-02-02T14:36:56.636774] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-02T23:12:10.767504] - ID:0 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-02T23:12:10.783093100] - ID:0 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T00:19:11.632871400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T17:32:34.936814800] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T17:32:54.798361200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T18:03:04.998275] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T18:55:10.970147900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T18:55:18.535569300] - operation type: failed login - username: gog - IP:/127.0.0.1:7777
+time: [2020-02-03T18:55:23.815506500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T19:12:44.134595300] - operation type: failed login - username: tosho - IP:/127.0.0.1:7777
+time: [2020-02-03T19:15:42.784287700] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-03T19:15:42.785314700] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T19:16:14.985158300] - ID:2 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - remove-admin-user
+time: [2020-02-03T19:16:14.986182700] - ID:2 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T20:23:25.289814500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T20:38:56.685181600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:07:21.876232100] - operation type: failed login - username: gogog - IP:/127.0.0.1:7777
+time: [2020-02-03T21:07:34.616663900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:29:41.733629200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:29:46.988915700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:29:52.739415900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:30:01.908659500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:31:12.514556200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:31:18.668634500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:31:24.244137200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:31:29.756313500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:33:46.074270400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:34:46.610713600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:36:59.554296400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:37:34.462548900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:38:17.686710300] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:40:03.908286700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:40:08.303566300] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:40:13.268636100] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:40:18.532801600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:57:34.725653900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:57:38.341651500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:57:41.540901500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:59:06.696160600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:59:10.129816400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T21:59:14.369161200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:00:52.545864500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:46:27.358911800] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:46:31.589142200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:46:35.988216900] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:46:41.332590] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:49:59.955980200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:50:04.104340400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:50:08.138351600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:53:19.764879600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:53:23.072988700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:53:26.045595700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:54:40.901498100] - operation type: failed login - username: jojo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:54:45.028123600] - operation type: failed login - username: jojo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:54:48.625844] - operation type: failed login - username: jojo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:56:50.486873] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:56:52.973050400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T22:56:56.011528800] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T23:18:56.208421400] - operation type: failed login - username: vaso - IP:/127.0.0.1:7777
+time: [2020-02-03T23:22:44.632820] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T23:24:03.968336300] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T23:24:16.209897400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T23:45:54.254127] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: gogo - delete-user
+time: [2020-02-03T23:45:54.271409700] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T23:51:25.025220700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-03T23:55:04.005626100] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-03T23:55:04.013642200] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T23:55:25.249077700] - ID:3 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - delete-user
+time: [2020-02-03T23:55:25.256071900] - ID:4 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T23:58:52.112956700] - ID:1 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - add-admin-user
+time: [2020-02-03T23:58:52.160876] - ID:2 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-03T23:59:07.326432300] - ID:3 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - delete-user
+time: [2020-02-03T23:59:07.333448900] - ID:4 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T00:06:51.672615100] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T00:08:03.604030500] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-04T00:08:03.611047300] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T00:08:19.436792800] - ID:3 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - delete-user
+time: [2020-02-04T00:08:19.445788300] - ID:4 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T01:51:57.268845500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T03:20:04.926067200] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-04T03:20:04.979055400] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T03:20:33.837626900] - ID:3 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - remove-admin-user
+time: [2020-02-04T03:20:33.845620800] - ID:4 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T03:20:55.031727600] - ID:5 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: pesho - add-admin-user
+time: [2020-02-04T03:20:55.039742900] - ID:6 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - unsuccessful
+time: [2020-02-04T03:21:22.510994900] - ID:7 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: pesho - delete-user
+time: [2020-02-04T03:24:19.687102200] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - delete-user
+time: [2020-02-04T03:24:19.696096900] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T03:24:25.823620400] - ID:3 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - delete-user
+time: [2020-02-04T03:26:27.011823800] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: pesho - delete-user
+time: [2020-02-04T03:26:27.021817] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T03:28:59.490286500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T03:30:09.877980600] - operation type: failed login - username: gog - IP:/127.0.0.1:7777
+time: [2020-02-04T04:15:47.857689600] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-04T04:15:47.910295400] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T04:16:25.954260200] - ID:3 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: gogo - remove-admin-user
+time: [2020-02-04T04:16:25.962253500] - ID:4 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T04:16:52.396876700] - ID:5 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - delete-user
+time: [2020-02-04T04:17:20.612947900] - ID:6 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: jojo - delete-user
+time: [2020-02-04T04:17:20.622963] - ID:7 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - unsuccessful
+time: [2020-02-04T05:37:34.283035800] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T05:37:41.788222500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T13:08:40.665647100] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T13:08:44.475857300] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T13:32:31.447449] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:34:12.169020] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:35:11.924837800] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:35:32.768933200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:36:41.306928700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:37:01.038975500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:38:07.628819900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:38:15.177628600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:40:37.861117300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:41:20.576447200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:45:44.696429700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T13:51:41.256140800] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:52:59.946735200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:53:46.991558800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T13:53:47.028535900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:57:11.184783600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T13:57:50.794044800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T13:57:50.838020700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:00:56.306936700] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:00:56.354911600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:01:28.469798800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:01:28.509776700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:03:22.376960] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:03:22.416935800] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:07:03.384528800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:07:03.423506200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:09:14.092443900] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:09:14.123596900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:11:44.952996800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:11:44.980979700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:12:36.654571500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:12:36.698547] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:14:57.828762500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:14:57.869738300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:15:52.291328400] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:15:52.326307700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:17:50.223568100] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:17:50.265545400] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:20:20.840490800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:20:20.860477700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:20:29.931577300] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:20:29.971554500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:20:40.293748600] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:20:40.323729300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:22:46.684635500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:22:46.715882600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:23:23.095020900] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:23:23.131998300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:24:41.735186200] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:24:41.766434500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:25:55.345764300] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:25:55.386738500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:26:59.581085] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:26:59.629057] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:47:18.426734400] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:47:18.465713] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:49:25.071928400] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:49:25.110907300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:52:21.951827700] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:52:21.990807] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T14:55:52.651020500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T14:55:52.692992900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:01:49.351130500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:01:49.390107400] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:02:02.422209] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:02:02.515157500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:02:28.581298300] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:03:18.062237200] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:03:39.847176200] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:04:36.147565900] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:05:17.092613500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:05:51.563095100] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:06:22.639161500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:08:54.298121500] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:09:09.622744900] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:09:57.669070800] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:09:57.723040400] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:10:02.068666600] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:10:02.115641600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:10:05.322085] - operation type: failed login - username: gogo - IP:null
+time: [2020-02-04T15:10:05.358061600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:11:06.894825300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:11:52.488901600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:15:37.302076900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:18:27.080053600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:18:48.689232700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:29:12.581190900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:29:56.274429900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:32:20.085059400] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:32:34.449703] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:34:45.349047] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:37:49.938387] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:40:04.803586500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:40:40.827632500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:46:23.046230600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:47:32.806265400] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:47:43.852226600] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:48:04.598773200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:48:38.547942700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:52:20.463036100] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:52:20.499016] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:52:34.350747300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:52:34.378731200] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:56:56.273171800] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:56:56.281168400] - ID:2 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T15:56:56.301156700] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:56:56.336136500] - ID:3 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:57:57.064156900] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:57:57.074151400] - ID:2 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T15:57:57.109130300] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:57:57.125121900] - ID:3 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:57:57.170097600] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:58:21.624022700] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:58:21.639013900] - ID:2 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T15:58:21.668998] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:58:21.683990300] - ID:3 - operation type: configuration change - doer: gogo - IP:null - affected: jojoj - add-admin-user
+time: [2020-02-04T15:58:21.695982] - ID:4 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T15:58:21.730962] - ID:5 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:58:47.676456900] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:58:47.688450300] - ID:2 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T15:58:47.723429900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T15:58:47.743417500] - ID:3 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T15:58:47.752413100] - ID:4 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T15:58:47.768403800] - ID:5 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:00:20.102318600] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:00:20.144295600] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:00:20.156288400] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:00:20.176275500] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T16:00:20.192266800] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:00:20.206258400] - ID:5 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T16:00:20.226246400] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:02:37.106206500] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:02:37.123198900] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:02:37.139189300] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:02:37.175168400] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:02:37.186161500] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:02:37.207148900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T16:02:37.218145700] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:02:37.227137800] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T16:02:37.244128600] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:11:24.565747200] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:11:24.586736800] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:11:24.597728800] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:11:24.627711800] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:11:24.640703300] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:11:24.674683100] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T16:11:24.689674400] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:11:24.701667] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T16:11:24.715660100] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:14:03.833592400] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:14:03.849582400] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:14:03.861576] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:14:03.879564600] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:14:03.893557100] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:14:03.943527900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T16:14:03.954522700] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:14:03.964517500] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T16:14:03.978510900] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:17:44.235447700] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T16:17:51.213503400] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T16:18:34.627315600] - ID:1 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: vasil - add-admin-user
+time: [2020-02-04T16:18:34.635310600] - ID:2 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T16:18:48.112849600] - ID:3 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: vasil - delete-user
+time: [2020-02-04T16:22:32.419034600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-04T16:25:31.861291] - ID:1 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: vasil - delete-user
+time: [2020-02-04T16:26:39.003805800] - operation type: failed login - username: vasil - IP:/127.0.0.1:7777
+time: [2020-02-04T16:29:16.082381800] - ID:1 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: vasko - delete-user
+time: [2020-02-04T16:32:44.528558400] - ID:1 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: vasko - delete-user
+time: [2020-02-04T16:32:44.536553300] - ID:2 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-04T16:33:02.424457900] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:33:02.454440800] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-04T16:33:02.472430900] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:33:02.495416200] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:33:02.507409700] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-04T16:33:02.534394900] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-04T16:33:02.547385800] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-04T16:33:02.558378600] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-04T16:33:02.575369600] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-05T09:04:31.678495200] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-05T09:07:20.938011400] - ID:1 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: jojo - add-admin-user
+time: [2020-02-05T09:07:20.947005300] - ID:2 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-05T09:08:07.512248400] - ID:3 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - affected: pesho - delete-user
+time: [2020-02-05T09:08:07.519264500] - ID:4 - operation type: configuration change - doer: jojo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-05T09:08:45.129484800] - operation type: failed login - username: niki - IP:/127.0.0.1:7777
+time: [2020-02-05T09:09:52.534291300] - operation type: failed login - username: jojo - IP:/127.0.0.1:7777
+time: [2020-02-05T09:10:42.243128] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
+time: [2020-02-05T09:11:13.310074300] - ID:5 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - affected: jojo - remove-admin-user
+time: [2020-02-05T09:11:13.319089700] - ID:6 - operation type: configuration change - doer: gogoo - IP:/127.0.0.1:7777 - successful
+time: [2020-02-05T09:39:08.534809900] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-05T09:39:08.550434700] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-02-05T09:39:08.566060300] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-05T09:39:08.597307100] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-05T09:39:08.612931400] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-02-05T09:39:08.659803200] - operation type: failed login - username: gogog - IP:null
+time: [2020-02-05T09:39:08.675425800] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-02-05T09:39:08.691052900] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-02-05T09:39:08.691052900] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
