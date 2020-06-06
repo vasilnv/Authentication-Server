@@ -15,14 +15,11 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class DataOrganizer {
-	private static final int NULL_ARG = 0;
-	private static final int FIRST_ARG = 1;
+	private static final int ZERO_ARG = 0;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
 	private static final int FOURTH_ARG = 4;
-	private static final int FIFTH_ARG = 5;
 	private static final int TIME_TO_LOCK = 50;
-	private static final int FAILED_LOGIN_MAX = 3;
 
 	private UserFileEditor userFileEditor = new UserFileEditor();
 	private AuditLog logger = new AuditLog();
@@ -121,7 +118,7 @@ public class DataOrganizer {
 		usersSessions.remove(oldUsername);
 		usersSessions.put(newUsername, oldSession);
 		sessionsUsers.put(oldSession, newUsername);
-		userFileEditor.changeConfiguration(oldUsername, newUsername, NULL_ARG);
+		userFileEditor.changeConfiguration(oldUsername, newUsername, ZERO_ARG);
 
 	}
 

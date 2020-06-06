@@ -20,8 +20,10 @@ public class ClientWriter implements Runnable {
 		while (true) {
 			try {
 				buffer.clear();
+				
 				this.socketChannel.read(buffer);
 				buffer.flip();
+				
 				String messageFromServer = new String(buffer.array(), 0, buffer.limit());
 				System.out.println("The server replied <" + messageFromServer + ">");
 			} catch (IOException e) {

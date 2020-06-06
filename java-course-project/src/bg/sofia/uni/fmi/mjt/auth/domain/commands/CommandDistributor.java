@@ -8,8 +8,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class CommandDistributor {
-	private static final int NULL_ARG = 0;
-	private static final int FIRST_ARG = 1;
+	private static final int ZERO_ARG = 0;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
 	private static final int FIFTH_ARG = 5;
@@ -18,7 +17,7 @@ public class CommandDistributor {
 
 	public void messageReceive(String messageToServer, SocketChannel socketChannel, Domain domain) {
 		String[] tokens = messageToServer.split(" ");
-		String command = tokens[NULL_ARG];
+		String command = tokens[ZERO_ARG];
 		OutputHandler output = new OutputHandler(socketChannel);
 		String resultMessage = null;
 		CommandExecutor executor = new CommandExecutor();

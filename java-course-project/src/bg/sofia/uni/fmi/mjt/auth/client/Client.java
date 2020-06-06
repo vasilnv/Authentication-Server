@@ -12,11 +12,14 @@ import java.util.Scanner;
 public class Client {
 	private static final int SERVER_PORT = 7777;
 	private static final String SERVER_HOST = "localhost";
+	private static final String ERROR_MESSAGE = "Problem with the channel";
+	
 	private static ByteBuffer buffer = ByteBuffer.allocate(1024);
 
 	public static void main(String[] args) {
 
-		try (SocketChannel socketChannel = SocketChannel.open(); Scanner scanner = new Scanner(System.in)) {
+		try (SocketChannel socketChannel = SocketChannel.open(); 
+				Scanner scanner = new Scanner(System.in)) {
 			socketChannel.connect(new InetSocketAddress(SERVER_HOST, SERVER_PORT));
 			new Thread(new ClientWriter(socketChannel)).start();
 
@@ -38,11 +41,13 @@ public class Client {
 				buffer.clear();
 				buffer.put(message.getBytes());
 				buffer.flip();
+
 				socketChannel.write(buffer);
 			}
 
 		} catch (IOException e) {
-			
+			System.out.println(ERROR_MESSAGE);
+			e.printStackTrace();
 		}
 	}
 }

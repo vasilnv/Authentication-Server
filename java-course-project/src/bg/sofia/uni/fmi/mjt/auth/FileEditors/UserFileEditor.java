@@ -11,7 +11,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class UserFileEditor {
-	private static final int NULL_ARG = 0;
+	private static final int ZERO_ARG = 0;
 	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
@@ -25,7 +25,7 @@ public class UserFileEditor {
 			String line = bufferedReader.readLine();
 			while (line != null) {
 				String[] tokens = line.split(" ");
-				String username = tokens[NULL_ARG];
+				String username = tokens[ZERO_ARG];
 				String password = tokens[FIRST_ARG];
 				String firstname = tokens[SECOND_ARG];
 				String lastname = tokens[THIRD_ARG];
@@ -34,7 +34,7 @@ public class UserFileEditor {
 				dataOrganizer.getUsers().put(username, user);
 
 				if (dataOrganizer.getAdmins().isEmpty()) {
-					dataOrganizer.getAdmins().add(tokens[NULL_ARG]);
+					dataOrganizer.getAdmins().add(tokens[ZERO_ARG]);
 				}
 				line = bufferedReader.readLine();
 			}
@@ -55,7 +55,7 @@ public class UserFileEditor {
 			StringBuilder builder = new StringBuilder();
 			while (line != null) {
 				String[] tokens = line.split(" ");
-				if (username.equals(tokens[NULL_ARG])) {
+				if (username.equals(tokens[ZERO_ARG])) {
 					line = bufferedReader.readLine();
 					continue;
 				}
@@ -83,9 +83,9 @@ public class UserFileEditor {
 			StringBuilder builder = new StringBuilder();
 			while (line != null) {
 				String[] tokens = line.split(" ");
-				if (username.equals(tokens[NULL_ARG])) {
+				if (username.equals(tokens[ZERO_ARG])) {
 					tokens[arg] = newConfig;
-					String usernameInFile = tokens[NULL_ARG];
+					String usernameInFile = tokens[ZERO_ARG];
 					String passwordInFile = tokens[FIRST_ARG];
 					String firstnameInFile = tokens[SECOND_ARG];
 					String lastnameInFile = tokens[THIRD_ARG];

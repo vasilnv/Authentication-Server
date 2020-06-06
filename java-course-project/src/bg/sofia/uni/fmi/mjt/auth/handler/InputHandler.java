@@ -10,7 +10,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.session.SessionUpdate;
 
 public class InputHandler {
 	private static final int BUFFER_CAPACITY = 1024;
-	private static final String ERROR_MESSAGE = "Problem eoth the SocketChannel";
+	private static final String ERROR_MESSAGE = "Problem with the Socket Channel";
 
 	private SocketChannel socketChannel = null;
 	private Domain domain = null;
@@ -37,7 +37,5 @@ public class InputHandler {
 			System.out.println(ERROR_MESSAGE);
 			e.printStackTrace();
 		}
-
 	}
-
 }
