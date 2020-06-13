@@ -300,3 +300,12 @@ time: [2020-02-05T09:39:08.659803200] - operation type: failed login - username:
 time: [2020-02-05T09:39:08.675425800] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
 time: [2020-02-05T09:39:08.691052900] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
 time: [2020-02-05T09:39:08.691052900] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-06-13T19:58:49.567618200] - ID:1 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-06-13T19:58:49.692611900] - ID:2 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - remove-admin-user
+time: [2020-06-13T19:58:49.692611900] - ID:3 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-06-13T19:58:49.692611900] - ID:4 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-06-13T19:58:49.692611900] - ID:5 - operation type: configuration change - doer: gogo - IP:null - successful
+time: [2020-06-13T19:58:49.723858500] - operation type: failed login - username: gogog - IP:null
+time: [2020-06-13T19:58:49.739483800] - ID:6 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user
+time: [2020-06-13T19:58:49.739483800] - ID:7 - operation type: configuration change - doer: gogo - IP:null - unsuccessful
+time: [2020-06-13T19:58:49.770734500] - ID:8 - operation type: configuration change - doer: gogo - IP:null - affected: jojo - add-admin-user

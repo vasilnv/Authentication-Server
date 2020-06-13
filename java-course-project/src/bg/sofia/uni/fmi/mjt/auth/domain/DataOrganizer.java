@@ -16,6 +16,7 @@ import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class DataOrganizer {
 	private static final int ZERO_ARG = 0;
+	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
 	private static final int FOURTH_ARG = 4;
@@ -109,7 +110,7 @@ public class DataOrganizer {
 		sessionsUsers.put(session.getId(), username);
 	}
 
-	public void changeUsername(String oldUsername, String newUsername) {
+	public String changeUsername(String oldUsername, String newUsername) {
 		users.get(oldUsername).setUsername(newUsername);
 		AuthenticatedUser tmpUser = users.get(oldUsername);
 		users.remove(oldUsername);
@@ -119,26 +120,36 @@ public class DataOrganizer {
 		usersSessions.put(newUsername, oldSession);
 		sessionsUsers.put(oldSession, newUsername);
 		userFileEditor.changeConfiguration(oldUsername, newUsername, ZERO_ARG);
+		return newUsername;
 
 	}
 
-	public void changeFirstName(String username, String firstName) {
+	public String changeFirstName(String username, String firstName) {
 		users.get(username).setFirstName(firstName);
 		userFileEditor.changeConfiguration(username, firstName, SECOND_ARG);
+		return firstName;
 	}
 
-	public void changeLastName(String username, String lastName) {
+	public String changeLastName(String username, String lastName) {
 		users.get(username).setLastname(lastName);
 		userFileEditor.changeConfiguration(username, lastName, THIRD_ARG);
+		return lastName;
 	}
 
-	public void changeEmail(String username, String email) {
+	public String changeEmail(String username, String email) {
 		users.get(username).setEmail(email);
 		userFileEditor.changeConfiguration(username, email, FOURTH_ARG);
+		return email;
 	}
 
 	public boolean isUserLoggedIn(String sessionId) {
 		return (sessions.containsKey(sessionId));
+	}
+	
+	public String changePassword(String username, String password) {
+		users.get(username).setPassword(password);
+		userFileEditor.changeConfiguration(username, password, FIRST_ARG);
+		return password;
 	}
 
 

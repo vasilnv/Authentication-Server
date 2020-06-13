@@ -7,13 +7,13 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class Domain {
-	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
 	private static final int FAILED_LOGIN_MAX = 3;
-	private static DataOrganizer dataOrganizer;
 
+	private static DataOrganizer dataOrganizer;
 	private static Domain instance;
+
 	private String result = null;
 
 	private Domain(DataOrganizer organizer) {
@@ -105,8 +105,7 @@ public class Domain {
 		} else if (dataOrganizer.checkIfUserExists(username)
 				&& dataOrganizer.getChannelsByUsername().get(socketChannel).equals(username)
 				&& dataOrganizer.getUsers().get(username).getPassword().equals(oldPassword)) {
-			dataOrganizer.getUsers().get(username).setPassword(newPassword);
-			dataOrganizer.getUserFileEditor().changeConfiguration(username, newPassword, FIRST_ARG);
+			dataOrganizer.changePassword(username, newPassword);
 			result = "succesfully changed password";
 		} else {
 			result = "unsuccessfully changed password";

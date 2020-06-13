@@ -8,9 +8,6 @@ import java.time.LocalDateTime;
 public class AuditLog {
 	private static int id = 0;
 	private static final String ERROR_MESSAGE_WRITER = "Problem with the File Writer";
-	private static final String ERROR_MESSAGE_READER = "Problem with the Reader";
-	
-
 	
 	public void writeFailedLogin(SocketChannel socket, String name) {
 		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
