@@ -9,10 +9,6 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 public class SessionRepository {
 	private Map<String, Session> sessions = new ConcurrentHashMap<>();
 
-	public SessionRepository() {
-		
-	}
-	
 	public Map<String, Session> getSessions() {
 		return sessions;
 	}
@@ -29,6 +25,7 @@ public class SessionRepository {
 		session.setUsername(newUser.getUsername());
 		newUser.setSession(session.getId());
 	}
+	
 	public void removeSession(Session session) {
 		sessions.remove(session.getId());
 	}

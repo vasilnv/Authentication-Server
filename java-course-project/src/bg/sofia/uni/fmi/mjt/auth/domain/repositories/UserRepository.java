@@ -23,10 +23,6 @@ public class UserRepository {
 
 	private UserFileEditor userFileEditor = new UserFileEditor();
 
-	public UserRepository() {
-
-	}
-
 	public AuthenticatedUser getUser(String username) {
 		return users.get(username);
 	}
