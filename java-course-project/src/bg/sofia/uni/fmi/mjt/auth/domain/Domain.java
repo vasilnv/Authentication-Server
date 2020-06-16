@@ -22,9 +22,8 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class Domain {
-	private static final int SECOND_ARG = 2;
+	private static final int ITERATION_STEP_TWO = 2;
 	private static final int THIRD_ARG = 3;
-	private static final int FOURTH_ARG = 4;
 
 	private AuditLog logger = new AuditLog();
 
@@ -177,24 +176,22 @@ public class Domain {
 		return result;
 	}
 
-	public String updateUser(String[] tokens, String currSessionID, String username) {
+	public String updateUser(String currSessionID, String username, String command, String updatedData) {
 		if (!sessionRepository.isUserLoggedIn(currSessionID)) {
 			result = "not logged in";
 		} else if (sessionRepository.isUserLoggedIn(currSessionID)
 				&& userRepository.getUser(username).getSessionID().equals(currSessionID)) {
-			for (int i = THIRD_ARG; i < tokens.length; i += SECOND_ARG) {
-				if (tokens[i - 1].equals("new-username")) {
-					changeUsername(username, tokens[i]);
-				}
-				if (tokens[i - 1].equals("new-firstname")) {
-					changeFirstName(username, tokens[i]);
-				}
-				if (tokens[i - 1].equals("new-lastname")) {
-					changeLastName(username, tokens[i]);
-				}
-				if (tokens[i - 1].equals("new-email")) {
-					changeEmail(username, tokens[i]);
-				}
+			if (command.equals("new-username")) {
+				changeUsername(username, updatedData);
+			}
+			if (command.equals("new-firstname")) {
+				changeFirstName(username, updatedData);
+			}
+			if (command.equals("new-lastname")) {
+				changeLastName(username, updatedData);
+			}
+			if (command.equals("new-email")) {
+				changeEmail(username, updatedData);
 			}
 			result = "successful update";
 		} else {

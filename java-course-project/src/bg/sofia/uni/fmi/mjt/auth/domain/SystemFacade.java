@@ -31,7 +31,6 @@ public class SystemFacade {
 		domain.loadUsers();
 	}
 
-
 	public String registerInSystem(SocketChannel socketChannel, AuthenticatedUser newUser) {
 		return domain.registerInSystem(socketChannel, newUser);
 	}
@@ -49,8 +48,8 @@ public class SystemFacade {
 		return domain.resetPassword(userSession, username, oldPassword, newPassword, socketChannel);
 	}
 
-	public String updateUser(String[] tokens, String currSessionID, String username) {
-		return domain.updateUser(tokens, currSessionID, username);
+	public String updateUser(String currSessionID, String username, String command, String updatedData) {
+		return domain.updateUser(currSessionID, username, command, updatedData);
 	}
 
 	public String logout(String currSessionID, String currUsername, SocketChannel socketChannel) {

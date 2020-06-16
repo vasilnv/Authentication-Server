@@ -360,3 +360,5 @@ time: [2020-06-16T12:55:16.641817500] - ID:6 - operation type: configuration cha
 time: [2020-06-16T12:55:38.624256900] - ID:7 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: gosho1 - add-admin-user
 time: [2020-06-16T12:57:17.385643700] - ID:8 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: gosho1 - delete-user
 time: [2020-06-16T12:57:17.385643700] - ID:9 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
+time: [2020-06-16T20:12:00.910603100] - ID:1 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: tosho - add-admin-user
+time: [2020-06-16T20:12:00.926226100] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful

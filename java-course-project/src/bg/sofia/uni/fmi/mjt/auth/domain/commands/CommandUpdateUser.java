@@ -6,6 +6,8 @@ import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 
 public class CommandUpdateUser implements CommandOperation{
 	private static final int FIRST_ARG = 1;
+	private static final int ITERATION_STEP_TWO = 2;
+	private static final int THIRD_ARG = 3;
 
 	private String message;
 	private SystemFacade domain;
@@ -22,7 +24,21 @@ public class CommandUpdateUser implements CommandOperation{
 		String[] tokens = message.split(" ");
 		String username = SystemFacade.getDataOrganizer().getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
-		String result = domain.updateUser(tokens, currSessionID, username);
+		String result = "";
+		for (int i = THIRD_ARG; i < tokens.length; i += ITERATION_STEP_TWO) {
+			if (tokens[i - 1].equals("new-username")) {
+				result = domain.updateUser(currSessionID, username, "new-username", tokens[i]);
+			}
+			if (tokens[i - 1].equals("new-firstname")) {
+				result = domain.updateUser(currSessionID, username, "new-firstname", tokens[i]);
+			}
+			if (tokens[i - 1].equals("new-lastname")) {
+				result = domain.updateUser(currSessionID, username, "new-lastname", tokens[i]);
+			}
+			if (tokens[i - 1].equals("new-email")) {
+				result = domain.updateUser(currSessionID, username, "new-email", tokens[i]);
+			}
+		}
 		return result;
 	}
 
