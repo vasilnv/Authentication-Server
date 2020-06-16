@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
+import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class SessionRepository {
 	private Map<String, Session> sessions = new ConcurrentHashMap<>(); // sessionID - session
@@ -24,6 +25,10 @@ public class SessionRepository {
 		sessions.put(session.getId(), session);
 	}
 
+	public void mapSessionUser(Session session, AuthenticatedUser newUser) {
+		session.setUsername(newUser.getUsername());
+		newUser.setSession(session.getId());
+	}
 	public void removeSession(Session session) {
 		sessions.remove(session.getId());
 	}
