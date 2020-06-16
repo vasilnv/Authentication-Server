@@ -14,7 +14,6 @@ public class AuthenticatedUser {
 	private String sessionID;
 
 	public AuthenticatedUser(String username, String pass, String firstName, String lastName, String email) {
-		super();
 		this.username = username;
 		this.password = pass;
 		this.firstName = firstName;
