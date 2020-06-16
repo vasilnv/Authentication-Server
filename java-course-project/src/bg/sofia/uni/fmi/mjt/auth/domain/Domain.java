@@ -61,6 +61,11 @@ public class Domain {
 		output.write("Your session expired. Please login again.");
 	}
 
+	private void mapChannelsUsernames(SocketChannel socketChannel, String username) {
+		this.channelsByUsername.put(socketChannel, username);
+		this.usernamesByChannel.put(username, socketChannel);
+	}
+
 	private String result;
 
 	public String registerInSystem(SocketChannel socketChannel, AuthenticatedUser newUser) {
@@ -71,8 +76,7 @@ public class Domain {
 			sessionRepository.mapSessionUser(session, newUser);
 			System.out.println("user registered with session ID :" + session.getId());
 
-			this.channelsByUsername.put(socketChannel, username);
-			this.usernamesByChannel.put(username, socketChannel);
+			mapChannelsUsernames(socketChannel, username);
 			userRepository.addUser(username, newUser);
 			userRepository.writeUserInFile(username, newUser);
 			userRepository.checkIfAnyAdminsExist(username);
@@ -82,7 +86,7 @@ public class Domain {
 		}
 		return result;
 	}
-	
+
 	public String logInByNameAndPassword(String username, String password, SocketChannel socketChannel) {
 		if (userRepository.checkIfUserExists(username) && userRepository.checkIfUserIsBlocked(username)) {
 			result = "You are blocked";
@@ -98,26 +102,24 @@ public class Domain {
 		return result;
 	}
 
-	public String logInSuccessfully(String username, SocketChannel socketChannel) {
+	private String logInSuccessfully(String username, SocketChannel socketChannel) {
 		Session session = new Session();
 		sessionRepository.addSession(session);
 		userRepository.getUser(username).setSession(session.getId());
 		sessionRepository.getSession(session.getId()).setUsername(username);
-		this.channelsByUsername.put(socketChannel, username);
-		this.usernamesByChannel.put(username, socketChannel);
+		mapChannelsUsernames(socketChannel, username);
 
 		result = "successful login with sessionID: " + session.getId();
 		return result;
 	}
 
-	public String logInUnSuccessfully(String username, SocketChannel socketChannel) {
+	private String logInUnSuccessfully(String username, SocketChannel socketChannel) {
 		userRepository.getUser(username).incrementloginFailed();
 		if (userRepository.getUser(username).getLoginFailed() == 3) {
 			userRepository.getUser(username).block();
 			this.logger.writeFailedLogin(socketChannel, username);
 			result = "You are blocked please try again in 50 seconds";
-		}
-		else {
+		} else {
 			result = "unsuccessful login";
 		}
 		return result;
@@ -126,8 +128,7 @@ public class Domain {
 	public String logInBySession(String sessionId, SocketChannel socketChannel) {
 		if (sessionRepository.isUserLoggedIn(sessionId)) {
 			String username = sessionRepository.getSessionUsername(sessionId);
-			this.channelsByUsername.put(socketChannel, username);
-			this.usernamesByChannel.put(username, socketChannel);
+			mapChannelsUsernames(socketChannel, username);
 			userRepository.getUser(username).setSession(sessionId);
 			sessionRepository.setSessionUsername(sessionId, username);
 
@@ -177,7 +178,7 @@ public class Domain {
 		return result;
 	}
 
-	public String logout(String currSessionID, String currUsername, SocketChannel socketChannel) {
+	public String logout(String currSessionID, String currUsername) {
 		if (!sessionRepository.isUserLoggedIn(currSessionID)) {
 			result = "not logged in";
 		} else if (currUsername.equals(sessionRepository.getSessionUsername(currSessionID))) {
