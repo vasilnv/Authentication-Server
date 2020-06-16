@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
+import bg.sofia.uni.fmi.mjt.auth.domain.commands.CommandParameter;
 import bg.sofia.uni.fmi.mjt.auth.domain.repositories.SessionRepository;
 import bg.sofia.uni.fmi.mjt.auth.domain.repositories.UserRepository;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
@@ -81,32 +82,42 @@ public class Domain {
 		}
 		return result;
 	}
-
-	public String logInByNameAndPass(String username, String password, SocketChannel socketChannel) {
+	
+	public String logInByNameAndPassword(String username, String password, SocketChannel socketChannel) {
 		if (userRepository.checkIfUserExists(username) && userRepository.checkIfUserIsBlocked(username)) {
 			result = "You are blocked";
 		} else if (userRepository.checkIfUserExists(username)
 				&& userRepository.getUserPassword(username).equals(password)) {
-			Session session = new Session();
-			sessionRepository.addSession(session);
-			userRepository.getUser(username).setSession(session.getId());
-			sessionRepository.getSession(session.getId()).setUsername(username);
-			this.channelsByUsername.put(socketChannel, username);
-			this.usernamesByChannel.put(username, socketChannel);
-
-			result = "successful login with sessionID: " + session.getId();
-
+			result = logInSuccessfully(username, socketChannel);
 		} else if (userRepository.checkIfUserExists(username)) {
-			userRepository.getUser(username).incrementloginFailed();
-			if (userRepository.getUser(username).getLoginFailed() == 3) {
-				userRepository.getUser(username).block();
-				this.logger.writeFailedLogin(socketChannel, username);
-				result = "You are blocked please try again in 50 seconds";
-				return result;
-			}
-			result = "unsuccessful login";
+			result = logInUnSuccessfully(username, socketChannel);
 		} else {
 			this.logger.writeFailedLogin(socketChannel, username);
+			result = "unsuccessful login";
+		}
+		return result;
+	}
+
+	public String logInSuccessfully(String username, SocketChannel socketChannel) {
+		Session session = new Session();
+		sessionRepository.addSession(session);
+		userRepository.getUser(username).setSession(session.getId());
+		sessionRepository.getSession(session.getId()).setUsername(username);
+		this.channelsByUsername.put(socketChannel, username);
+		this.usernamesByChannel.put(username, socketChannel);
+
+		result = "successful login with sessionID: " + session.getId();
+		return result;
+	}
+
+	public String logInUnSuccessfully(String username, SocketChannel socketChannel) {
+		userRepository.getUser(username).incrementloginFailed();
+		if (userRepository.getUser(username).getLoginFailed() == 3) {
+			userRepository.getUser(username).block();
+			this.logger.writeFailedLogin(socketChannel, username);
+			result = "You are blocked please try again in 50 seconds";
+		}
+		else {
 			result = "unsuccessful login";
 		}
 		return result;
@@ -147,16 +158,16 @@ public class Domain {
 			result = "not logged in";
 		} else if (sessionRepository.isUserLoggedIn(currSessionID)
 				&& userRepository.getUser(username).getSessionID().equals(currSessionID)) {
-			if (command.equals("new-username")) {
+			if (command.equals(CommandParameter.NEW_USERNAME.getCommand())) {
 				userUpdater.changeUsername(username, updatedData);
 			}
-			if (command.equals("new-firstname")) {
+			if (command.equals(CommandParameter.NEW_FIRSTNAME.getCommand())) {
 				userUpdater.changeFirstName(username, updatedData);
 			}
-			if (command.equals("new-lastname")) {
+			if (command.equals(CommandParameter.NEW_LASTNAME.getCommand())) {
 				userUpdater.changeLastName(username, updatedData);
 			}
-			if (command.equals("new-email")) {
+			if (command.equals(CommandParameter.NEW_EMAIL.getCommand())) {
 				userUpdater.changeEmail(username, updatedData);
 			}
 			result = "successful update";

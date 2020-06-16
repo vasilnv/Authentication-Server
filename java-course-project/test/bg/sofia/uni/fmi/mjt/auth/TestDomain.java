@@ -103,7 +103,7 @@ public class TestDomain {
 		sessions.put("0", session);
 
 		doNothing().when(dataOrg).addSession(session);
-		String message = domainModel.logInByNameAndPass("gogo", "gogo", socketChannel);
+		String message = domainModel.logInByNameAndPassword("gogo", "gogo", socketChannel);
 		assertTrue(message.contains("successful login with"));
 
 	}
@@ -123,7 +123,7 @@ public class TestDomain {
 		sessions.put("0", session);
 
 		doNothing().when(dataOrg).addSession(session);
-		String message = domainModel.logInByNameAndPass("gogo", "gogo", socketChannel);
+		String message = domainModel.logInByNameAndPassword("gogo", "gogo", socketChannel);
 		assertTrue(message.contains("unsuccessful login"));
 
 	}
@@ -143,7 +143,7 @@ public class TestDomain {
 		when(dataOrg.checkIfUserIsBlocked("gogog")).thenReturn(false);
 		AuditLog logger = new AuditLog();
 		when(dataOrg.getLogger()).thenReturn(logger);
-		String message = domainModel.logInByNameAndPass("gogog", "gogo", socketChannel);
+		String message = domainModel.logInByNameAndPassword("gogog", "gogo", socketChannel);
 		assertTrue(message.contains("unsuccessful login"));
 
 	}
@@ -154,7 +154,7 @@ public class TestDomain {
 		SocketChannel socketChannel = SocketChannel.open();
 		when(dataOrg.checkIfUserExists("gogog")).thenReturn(true);
 		when(dataOrg.checkIfUserIsBlocked("gogog")).thenReturn(true);
-		String message = domainModel.logInByNameAndPass("gogog", "gogo", socketChannel);
+		String message = domainModel.logInByNameAndPassword("gogog", "gogo", socketChannel);
 
 		assertTrue(message.contains("You are blocked"));
 
