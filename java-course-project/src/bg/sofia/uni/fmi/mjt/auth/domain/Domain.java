@@ -157,10 +157,12 @@ public class Domain {
 	public String updateUser(String currSessionID, String username, String command, String updatedData) {
 		if (!sessionRepository.isUserLoggedIn(currSessionID)) {
 			result = "not logged in";
-		} else if (sessionRepository.isUserLoggedIn(currSessionID)
+		} else if (userRepository.checkIfUserExists(username)
 				&& userRepository.getUser(username).getSessionID().equals(currSessionID)) {
 			if (command.equals(CommandParameter.NEW_USERNAME.getCommand())) {
 				userUpdater.changeUsername(username, updatedData);
+				userRepository.getUser(updatedData).setSession(currSessionID);
+				mapChannelsUsernames(usernamesByChannel.get(username), updatedData);
 			}
 			if (command.equals(CommandParameter.NEW_FIRSTNAME.getCommand())) {
 				userUpdater.changeFirstName(username, updatedData);
