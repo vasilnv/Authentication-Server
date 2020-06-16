@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.Set;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.SessionUpdate;
 import bg.sofia.uni.fmi.mjt.auth.handler.InputHandler;
 
@@ -27,10 +26,9 @@ public class Server {
 			serverSocketChannel.bind(new InetSocketAddress(HOST_NAME, HOST_PORT));
 			serverSocketChannel.configureBlocking(false);
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-			Domain dataOrganizer = Domain.getInstance();
-			SystemFacade systemFacade = SystemFacade.getInstance(dataOrganizer);
-			systemFacade.loadUsers();
-			Thread sessionUpdater = new SessionUpdate(dataOrganizer);
+			Domain domain = Domain.getInstance();
+			domain.loadUsers();
+			Thread sessionUpdater = new SessionUpdate(domain);
 			sessionUpdater.start();
 			
 			while (true) {
@@ -54,7 +52,7 @@ public class Server {
 							SocketChannel socketChannel = (SocketChannel) key.channel();
 							System.out.println(socketChannel.isConnected());
 
-							InputHandler inputHandler = new InputHandler(socketChannel, systemFacade);
+							InputHandler inputHandler = new InputHandler(socketChannel, domain);
 							inputHandler.read();
 						} else if (key.isAcceptable()) {
 	                        ServerSocketChannel serverSocketChannelKey = (ServerSocketChannel) key.channel();

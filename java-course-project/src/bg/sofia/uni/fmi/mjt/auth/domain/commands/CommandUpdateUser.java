@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.auth.domain.commands;
 
 import java.nio.channels.SocketChannel;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
+import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandUpdateUser implements CommandOperation{
 	private static final int FIRST_ARG = 1;
@@ -10,10 +10,10 @@ public class CommandUpdateUser implements CommandOperation{
 	private static final int THIRD_ARG = 3;
 
 	private String message;
-	private SystemFacade domain;
+	private Domain domain;
 	private SocketChannel socketChannel;
 
-	public CommandUpdateUser(SocketChannel channel, String message, SystemFacade domain) {
+	public CommandUpdateUser(SocketChannel channel, String message, Domain domain) {
 		this.message = message;
 		this.domain = domain;
 		this.socketChannel = channel;
@@ -22,9 +22,9 @@ public class CommandUpdateUser implements CommandOperation{
 	@Override
 	public String execute() {
 		String[] tokens = message.split(" ");
-		String username = SystemFacade.getDataOrganizer().getChannelsByUsername().get(socketChannel);
+		String username = domain.getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
-		String result = "";
+		String result = "wrong command";
 		for (int i = THIRD_ARG; i < tokens.length; i += ITERATION_STEP_TWO) {
 			if (tokens[i - 1].equals("new-username")) {
 				result = domain.updateUser(currSessionID, username, "new-username", tokens[i]);

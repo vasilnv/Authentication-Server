@@ -4,7 +4,7 @@ import java.nio.channels.SocketChannel;
 import java.util.HashMap;
 import java.util.Map;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
+import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class CommandDistributor {
@@ -15,7 +15,7 @@ public class CommandDistributor {
 
 	private static final int SIXTH_ARG = 6;
 
-	public void messageReceive(String messageToServer, SocketChannel socketChannel, SystemFacade domain) {
+	public void messageReceive(String messageToServer, SocketChannel socketChannel, Domain domain) {
 		String[] tokens = messageToServer.split(" ");
 		String command = tokens[ZERO_ARG];
 		OutputHandler output = new OutputHandler(socketChannel);
