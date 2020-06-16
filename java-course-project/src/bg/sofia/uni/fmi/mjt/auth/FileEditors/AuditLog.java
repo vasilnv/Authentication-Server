@@ -20,12 +20,12 @@ public class AuditLog {
 		}
 	}
 
-	public void writeConfigChangeStart(SocketChannel socketDoer, String doer, String affected, String command) {
+	public void writeConfigChangeStart(SocketChannel socket, String influencer, String affected, String command) {
 		try (FileWriter writer = new FileWriter(AUDIT_LOG_FILE_NAME, true);) {
 			id++;
 			writer.write("time: [" + LocalDateTime.now() + "] - " + "ID:" + id
-					+ " - operation type: configuration change - " + "doer: " + doer + " - IP:"
-					+ socketDoer.getLocalAddress() + " - affected: " + affected + " - " + command + "\n");
+					+ " - operation type: configuration change - " + "doer: " + influencer + " - IP:"
+					+ socket.getLocalAddress() + " - affected: " + affected + " - " + command + "\n");
 		} catch (IOException e) {
 			System.out.println(ERROR_MESSAGE_WRITER);
 			e.printStackTrace();
