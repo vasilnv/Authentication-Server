@@ -12,7 +12,6 @@ public class CommandDistributor {
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
 	private static final int FIFTH_ARG = 5;
-
 	private static final int SIXTH_ARG = 6;
 
 	public void messageReceive(String messageToServer, SocketChannel socketChannel, Domain domain) {

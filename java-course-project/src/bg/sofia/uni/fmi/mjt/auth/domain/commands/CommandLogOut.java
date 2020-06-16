@@ -5,7 +5,8 @@ import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandLogOut implements CommandOperation{
-	private static final int FIRST_ARG = 1;
+	private static final String STRING_DELIMITER = " ";
+	private static final int SESSION_ARGUMENT = 1;
 
 	private String message;
 	private Domain domain;
@@ -19,9 +20,9 @@ public class CommandLogOut implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String currUsername = domain.getChannelsByUsername().get(socketChannel);
-		String currSessionID = tokens[FIRST_ARG];
+		String currSessionID = tokens[SESSION_ARGUMENT];
 		return domain.logout(currSessionID, currUsername, socketChannel);
 	}
 }

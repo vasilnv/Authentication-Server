@@ -12,7 +12,20 @@ public class Client {
 	private static final String ERROR_MESSAGE = "Problem with the channel";
 	
 	private static ByteBuffer buffer = ByteBuffer.allocate(1024);
-
+	
+	private static void printInstructions() {
+		System.out.println("commands you can use: \n"
+				+ "register <username> <password> <firstName> <lastName> <email> \n"
+				+ "login <username> <password> \n" + "login <sessionId> \n"
+				+ "update-user <session-id> new-username <newUsername> new-firstname <newFirstName> "
+				+ "new-lastname <newLastName> new-email<email> (after sesionId its optional) \n"
+				+ "reset-password <session-id> <username> <oldPassword> <newPassword> \n"
+				+ "logout <sessionId> \n"
+				+ "add-admin-user <sessionId> <username> \n"
+				+ "remove-admin-user <sessionId> <username> \n"
+				+ "delete-user <sessionId> <username>");
+	}
+	
 	public static void main(String[] args) {
 
 		try (SocketChannel socketChannel = SocketChannel.open(); 
@@ -21,17 +34,8 @@ public class Client {
 			new Thread(new ClientWriter(socketChannel)).start();
 
 			System.out.println("Connected to the server.");
-			System.out.println("commands you can use: \n"
-					+ "register <username> <password> <firstName> <lastName> <email> \n"
-					+ "login <username> <password> \n" + "login <sessionId> \n"
-					+ "update-user <session-id> <newUsername> <newFirstName> <newLastName> <email> "
-					+ "(after sesionId its optional) \n"
-					+ "reset-password <session-id> <username> <oldPassword> <newPassword> \n"
-					+ "logout <sessionId> \n"
-					+ "add-admin-user <sessionId> <username> \n"
-					+ "remove-admin-user <sessionId> <username> \n"
-					+ "delete-user <sessionId> <username>");
-
+			printInstructions();
+			
 			while (true) {
 				String message = scanner.nextLine();
 

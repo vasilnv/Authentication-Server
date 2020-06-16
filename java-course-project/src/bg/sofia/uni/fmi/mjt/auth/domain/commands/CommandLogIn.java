@@ -6,9 +6,11 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 
 public class CommandLogIn implements CommandOperation {
-	private static final int FIRST_ARG = 1;
-	private static final int SECOND_ARG = 2;
-	private static final int THIRD_ARG = 3;
+	private static final String STRING_ENCODER = "javaIsCool";
+	private static final int USERNAME_ARGUMENT = 1;
+	private static final int PASSWORD_ARGUMENT = 2;
+	private static final int THREE_NUMBER_OF_TOKENS = 3;
+	private static final int TWO_NUMBER_OF_TOKENS = 2;
 
 	private String message;
 	private Domain domain;
@@ -24,13 +26,13 @@ public class CommandLogIn implements CommandOperation {
 	public String execute() {
 		String[] tokens = message.split(" ");
 
-		if (tokens.length == THIRD_ARG) {
-			String username = tokens[FIRST_ARG];
-			String password = tokens[SECOND_ARG];
-			password = PasswordEncoder.encodePass(password, "javaIsCool");
-			return domain.logInByNameAndPass(username, password, socketChannel);
-		} else if (tokens.length == SECOND_ARG) {
-			String sessionId = tokens[FIRST_ARG];
+		if (tokens.length == THREE_NUMBER_OF_TOKENS) {
+			String username = tokens[USERNAME_ARGUMENT];
+			String password = tokens[PASSWORD_ARGUMENT];
+			password = PasswordEncoder.encodePass(password, STRING_ENCODER);
+			return domain.logInByNameAndPassword(username, password, socketChannel);
+		} else if (tokens.length == TWO_NUMBER_OF_TOKENS) {
+			String sessionId = tokens[USERNAME_ARGUMENT];
 			return domain.logInBySession(sessionId, socketChannel);
 
 		}

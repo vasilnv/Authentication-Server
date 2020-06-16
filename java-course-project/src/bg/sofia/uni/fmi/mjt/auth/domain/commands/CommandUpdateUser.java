@@ -26,17 +26,17 @@ public class CommandUpdateUser implements CommandOperation{
 		String currSessionID = tokens[FIRST_ARG];
 		String result = "wrong command";
 		for (int i = THIRD_ARG; i < tokens.length; i += ITERATION_STEP_TWO) {
-			if (tokens[i - 1].equals("new-username")) {
-				result = domain.updateUser(currSessionID, username, "new-username", tokens[i]);
+			if (tokens[i - 1].equals(CommandParameter.NEW_USERNAME.getCommand())) {
+				result = domain.updateUser(currSessionID, username, CommandParameter.NEW_USERNAME.getCommand(), tokens[i]);
 			}
-			if (tokens[i - 1].equals("new-firstname")) {
-				result = domain.updateUser(currSessionID, username, "new-firstname", tokens[i]);
+			if (tokens[i - 1].equals(CommandParameter.NEW_FIRSTNAME.getCommand())) {
+				result = domain.updateUser(currSessionID, username, CommandParameter.NEW_FIRSTNAME.getCommand(), tokens[i]);
 			}
-			if (tokens[i - 1].equals("new-lastname")) {
-				result = domain.updateUser(currSessionID, username, "new-lastname", tokens[i]);
+			if (tokens[i - 1].equals(CommandParameter.NEW_LASTNAME.getCommand())) {
+				result = domain.updateUser(currSessionID, username, CommandParameter.NEW_LASTNAME.getCommand(), tokens[i]);
 			}
-			if (tokens[i - 1].equals("new-email")) {
-				result = domain.updateUser(currSessionID, username, "new-email", tokens[i]);
+			if (tokens[i - 1].equals(CommandParameter.NEW_EMAIL.getCommand())) {
+				result = domain.updateUser(currSessionID, username, CommandParameter.NEW_EMAIL.getCommand(), tokens[i]);
 			}
 		}
 		return result;

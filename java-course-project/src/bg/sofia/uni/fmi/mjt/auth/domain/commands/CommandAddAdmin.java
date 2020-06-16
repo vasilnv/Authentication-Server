@@ -5,8 +5,9 @@ import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandAddAdmin implements CommandOperation{
-	private static final int FIRST_ARG = 1;
-	private static final int SECOND_ARG = 2;
+	private static final String STRING_DELIMITER = " ";
+	private static final int SESSION_ID_ARGUMENT = 1;
+	private static final int USERNAME_ARGUMENT = 2;
 
 	private String message;
 	private Domain domain;
@@ -20,10 +21,10 @@ public class CommandAddAdmin implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String currUsername = domain.getChannelsByUsername().get(socketChannel);
-		String currSessionID = tokens[FIRST_ARG];
-		String usernameToMakeAdmin = tokens[SECOND_ARG];
+		String currSessionID = tokens[SESSION_ID_ARGUMENT];
+		String usernameToMakeAdmin = tokens[USERNAME_ARGUMENT];
 		String message = domain.addAdmin(currUsername, usernameToMakeAdmin, currSessionID, socketChannel);
 		return message;
 	}

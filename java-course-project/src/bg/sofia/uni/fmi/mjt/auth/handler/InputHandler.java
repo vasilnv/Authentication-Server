@@ -12,7 +12,7 @@ public class InputHandler {
 	private static final String ERROR_MESSAGE = "Problem with the Socket Channel";
 
 	private SocketChannel socketChannel = null;
-	private Domain domain= null;
+	private Domain domain = null;
 
 	public InputHandler(SocketChannel socketChannel, Domain domain) {
 		this.socketChannel = socketChannel;

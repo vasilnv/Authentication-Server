@@ -6,10 +6,11 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 
 public class CommandResetPassword implements CommandOperation{
-	private static final int FIRST_ARG = 1;
-	private static final int SECOND_ARG = 2;
-	private static final int THIRD_ARG = 3;
-	private static final int FOURTH_ARG = 4;
+	private static final String STRING_ENCODER = "javaIsCool";
+	private static final int SESSION_ID_ARGUMENT = 1;
+	private static final int USERNAME_ARGUMENT = 2;
+	private static final int OLD_PASSWORD_ARGUMENT = 3;
+	private static final int NEW_PASSWORD_ARGUMENT = 4;
 
 	private String message;
 	private Domain domain;
@@ -24,12 +25,12 @@ public class CommandResetPassword implements CommandOperation{
 	@Override
 	public String execute() {
 		String[] tokens = message.split(" ");
-		String userSession = tokens[FIRST_ARG];
-		String username = tokens[SECOND_ARG];
-		String oldPassword = tokens[THIRD_ARG];
-		String newPassword = tokens[FOURTH_ARG];
-		oldPassword = PasswordEncoder.encodePass(oldPassword, "javaIsCool");
-		newPassword = PasswordEncoder.encodePass(newPassword, "javaIsCool");
+		String userSession = tokens[SESSION_ID_ARGUMENT];
+		String username = tokens[USERNAME_ARGUMENT];
+		String oldPassword = tokens[OLD_PASSWORD_ARGUMENT];
+		String newPassword = tokens[NEW_PASSWORD_ARGUMENT];
+		oldPassword = PasswordEncoder.encodePass(oldPassword, STRING_ENCODER);
+		newPassword = PasswordEncoder.encodePass(newPassword, STRING_ENCODER);
 		String result = domain.resetPassword(userSession, username, oldPassword, newPassword, socketChannel);
 		return result;
 	}

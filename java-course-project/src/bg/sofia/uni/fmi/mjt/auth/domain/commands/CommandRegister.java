@@ -7,6 +7,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class CommandRegister implements CommandOperation {
+	private static final String STRING_ENCODER = "javaIsCool";
 	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 	private static final int THIRD_ARG = 3;
@@ -29,7 +30,7 @@ public class CommandRegister implements CommandOperation {
 
 		String username = tokens[FIRST_ARG];
 		String password = tokens[SECOND_ARG];
-		password = PasswordEncoder.encodePass(password, "javaIsCool");
+		password = PasswordEncoder.encodePass(password, STRING_ENCODER);
 		String firstname = tokens[THIRD_ARG];
 		String lastname = tokens[FOURTH_ARG];
 		String email = tokens[FIFTH_ARG];
