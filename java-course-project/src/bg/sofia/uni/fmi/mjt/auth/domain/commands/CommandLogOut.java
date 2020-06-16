@@ -23,6 +23,6 @@ public class CommandLogOut implements CommandOperation{
 		String[] tokens = message.split(STRING_DELIMITER);
 		String currUsername = domain.getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[SESSION_ARGUMENT];
-		return domain.logout(currSessionID, currUsername, socketChannel);
+		return domain.logout(currSessionID, currUsername);
 	}
 }
