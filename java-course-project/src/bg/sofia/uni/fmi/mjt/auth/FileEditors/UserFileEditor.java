@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
+import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
@@ -20,33 +20,6 @@ public class UserFileEditor {
 	private static final String ERROR_MESSAGE_READER = "Problem with the Reader";
 	
 
-	public void load(DataOrganizer dataOrganizer) {
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"))) {
-			String line = bufferedReader.readLine();
-			while (line != null) {
-				String[] tokens = line.split(" ");
-				String username = tokens[ZERO_ARG];
-				String password = tokens[FIRST_ARG];
-				String firstname = tokens[SECOND_ARG];
-				String lastname = tokens[THIRD_ARG];
-				String email = tokens[FOURTH_ARG];
-				AuthenticatedUser user = new AuthenticatedUser(username, password, firstname, lastname, email);
-				dataOrganizer.getUsers().put(username, user);
-
-				if (dataOrganizer.getAdmins().isEmpty()) {
-					dataOrganizer.getAdmins().add(tokens[ZERO_ARG]);
-				}
-				line = bufferedReader.readLine();
-			}
-
-		} catch (FileNotFoundException e) {
-			System.out.println(ERROR_MESSAGE_READER);
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println(ERROR_MESSAGE_WRITER);
-			e.printStackTrace();
-		}
-	}
 	
 	public void deleteUserFromFile (String username) {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"));

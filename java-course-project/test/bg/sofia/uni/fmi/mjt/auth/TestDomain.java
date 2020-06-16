@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
 
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
-import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
+import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
@@ -28,7 +28,7 @@ public class TestDomain {
 	public void testIfAddsSessionsCorrectly() {
 		Session mockSession = mock(Session.class);
 		when(mockSession.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addSession(mockSession);
 		assertTrue(data.getSessions().containsKey(mockSession.getId()));
 	}
@@ -38,7 +38,7 @@ public class TestDomain {
 		Session session = mock(Session.class);
 		String username = "gogo";
 		when(session.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addUserSession(username, session);
 		assertTrue(data.getUsersSessions().containsKey(username));
 	}
@@ -48,7 +48,7 @@ public class TestDomain {
 		Session session = mock(Session.class);
 		String username = "gogo";
 		when(session.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addSessionUser(username, session);
 		assertTrue(data.getSessionsUsers().containsKey(session.getId()));
 	}
@@ -66,7 +66,7 @@ public class TestDomain {
 	@Test
 	public void testRegister() throws IOException {
 		AuthenticatedUser user = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		Session session = mock(Session.class);
 		when(session.getId()).thenReturn("1");
 		data.addSession(session);
@@ -80,7 +80,7 @@ public class TestDomain {
 
 	@Test
 	public void testRegisterSuccessful() throws IOException {
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		SystemFacade domain = SystemFacade.getInstance(data);
 		AuthenticatedUser user = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
 		SocketChannel socketChannel = SocketChannel.open();
@@ -130,7 +130,7 @@ public class TestDomain {
 
 	
 	@Mock
-	private DataOrganizer dataOrg;
+	private Domain dataOrg;
 
 	@InjectMocks
 	private SystemFacade domainModel;

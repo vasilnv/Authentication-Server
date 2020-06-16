@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.auth;
 
 import org.junit.Test;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
+import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
@@ -16,7 +16,7 @@ public class TestDataOrganizer {
 	public void testIfAddsSessionsCorrectly() {
 		Session mockSession = mock(Session.class);
 		when(mockSession.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addSession(mockSession);
 		assertTrue(data.getSessions().containsKey(mockSession.getId()));
 	}
@@ -26,7 +26,7 @@ public class TestDataOrganizer {
 		Session session = mock(Session.class);
 		String username = "gogo";
 		when(session.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addUserSession(username, session);
 		assertTrue(data.getUsersSessions().containsKey(username));
 	}
@@ -36,7 +36,7 @@ public class TestDataOrganizer {
 		Session session = mock(Session.class);
 		String username = "gogo";
 		when(session.getId()).thenReturn("1");
-		DataOrganizer data = new DataOrganizer();
+		Domain data = new Domain();
 		data.addSessionUser(username, session);
 		assertTrue(data.getSessionsUsers().containsKey(session.getId()));
 	}

@@ -7,24 +7,19 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class SystemFacade {
-	private static final int SECOND_ARG = 2;
-	private static final int THIRD_ARG = 3;
-	private static final int FAILED_LOGIN_MAX = 3;
-
-	private static DataOrganizer dataOrganizer;
+	private static Domain dataOrganizer;
 	private static SystemFacade instance;
 
-	private String result = null;
 
-	private SystemFacade(DataOrganizer organizer) {
+	private SystemFacade(Domain organizer) {
 		dataOrganizer = organizer;
 	}
 
-	public static DataOrganizer getDataOrganizer() {
+	public static Domain getDataOrganizer() {
 		return dataOrganizer;
 	}
 
-	public static SystemFacade getInstance(DataOrganizer organizer) {
+	public static SystemFacade getInstance(Domain organizer) {
 		if (instance == null) {
 			instance = new SystemFacade(organizer);
 		}
@@ -32,7 +27,7 @@ public class SystemFacade {
 	}
 
 	public void loadUsers() {
-		dataOrganizer.getUserFileEditor().load(dataOrganizer);
+		UsersLoader.load(dataOrganizer);
 	}
 
 
