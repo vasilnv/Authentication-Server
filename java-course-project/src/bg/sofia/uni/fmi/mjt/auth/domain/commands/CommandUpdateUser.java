@@ -22,7 +22,7 @@ public class CommandUpdateUser implements CommandOperation{
 		String[] tokens = message.split(" ");
 		String username = SystemFacade.getDataOrganizer().getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
-		String result = domain.updateUser(tokens, currSessionID, username, socketChannel);
+		String result = domain.updateUser(tokens, currSessionID, username);
 		return result;
 	}
 

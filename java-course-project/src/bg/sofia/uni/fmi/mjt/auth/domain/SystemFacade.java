@@ -2,21 +2,22 @@ package bg.sofia.uni.fmi.mjt.auth.domain;
 
 import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
+import bg.sofia.uni.fmi.mjt.auth.domain.repositories.UserRepository;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class SystemFacade {
-	private static Domain dataOrganizer;
+	private static Domain domain;
 	private static SystemFacade instance;
 
 
 	private SystemFacade(Domain organizer) {
-		dataOrganizer = organizer;
+		domain = organizer;
 	}
 
 	public static Domain getDataOrganizer() {
-		return dataOrganizer;
+		return domain;
 	}
 
 	public static SystemFacade getInstance(Domain organizer) {
@@ -27,48 +28,48 @@ public class SystemFacade {
 	}
 
 	public void loadUsers() {
-		UsersLoader.load(dataOrganizer);
+		domain.loadUsers();
 	}
 
 
 	public String registerInSystem(SocketChannel socketChannel, AuthenticatedUser newUser) {
-		return dataOrganizer.registerInSystem(socketChannel, newUser);
+		return domain.registerInSystem(socketChannel, newUser);
 	}
 
 	public String logInByNameAndPass(String username, String password, SocketChannel socketChannel) {
-		return dataOrganizer.logInByNameAndPass(username, password, socketChannel);
+		return domain.logInByNameAndPass(username, password, socketChannel);
 	}
 
 	public String logInBySession(String sessionId, SocketChannel socketChannel) {
-		return dataOrganizer.logInBySession(sessionId, socketChannel);
+		return domain.logInBySession(sessionId, socketChannel);
 	}
 
 	public String resetPassword(String userSession, String username, String oldPassword, String newPassword,
 			SocketChannel socketChannel) {
-		return dataOrganizer.resetPassword(userSession, username, oldPassword, newPassword, socketChannel);
+		return domain.resetPassword(userSession, username, oldPassword, newPassword, socketChannel);
 	}
 
-	public String updateUser(String[] tokens, String currSessionID, String username, SocketChannel socketChannel) {
-		return dataOrganizer.updateUser(tokens, currSessionID, username, socketChannel);
+	public String updateUser(String[] tokens, String currSessionID, String username) {
+		return domain.updateUser(tokens, currSessionID, username);
 	}
 
 	public String logout(String currSessionID, String currUsername, SocketChannel socketChannel) {
-		return dataOrganizer.logout(currSessionID, currUsername, socketChannel);
+		return domain.logout(currSessionID, currUsername, socketChannel);
 	}
 
 	public String addAdmin(String currUsername, String usernameToMakeAdmin, String currSessionID,
 			SocketChannel socketChannel) {
-		return dataOrganizer.addAdmin(currUsername, usernameToMakeAdmin, currSessionID, socketChannel);
+		return domain.addAdmin(currUsername, usernameToMakeAdmin, currSessionID, socketChannel);
 	}
 
 	public String removeAdmin(String currUsername, String usernameToRemoveAdmin, String currSessionID,
 			SocketChannel socketChannel) {
-		return dataOrganizer.removeAdmin(currUsername, usernameToRemoveAdmin, currSessionID, socketChannel);
+		return domain.removeAdmin(currUsername, usernameToRemoveAdmin, currSessionID, socketChannel);
 	}
 
 	public String deleteUser(String currUsername, String usernameToDelete, String currSessionID,
 			SocketChannel socketChannel) {
-		return dataOrganizer.deleteUser(currUsername, usernameToDelete, currSessionID, socketChannel);
+		return domain.deleteUser(currUsername, usernameToDelete, currSessionID, socketChannel);
 	}
 
 }

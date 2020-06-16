@@ -19,7 +19,7 @@ public class AuditLog {
 		}
 	}
 
-	public void writeConfigChageStart(SocketChannel socketDoer, String doer, String affected, String command) {
+	public void writeConfigChangeStart(SocketChannel socketDoer, String doer, String affected, String command) {
 		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
 			id++;
 			writer.write("time: [" + LocalDateTime.now() + "] - " + "ID:" + id
@@ -31,7 +31,7 @@ public class AuditLog {
 		}
 	}
 
-	public void writeConfigChageFinish(SocketChannel socketDoer, String doer, String affected, boolean isCorrect) {
+	public void writeConfigChangeFinish(SocketChannel socketDoer, String doer, String affected, boolean isCorrect) {
 		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
 			id++;
 			String commandSuccess;
@@ -49,7 +49,6 @@ public class AuditLog {
 			e.printStackTrace();
 		}
 	}
-
 }
 
 

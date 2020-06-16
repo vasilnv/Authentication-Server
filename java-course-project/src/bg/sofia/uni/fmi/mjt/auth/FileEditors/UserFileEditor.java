@@ -18,10 +18,8 @@ public class UserFileEditor {
 	private static final int FOURTH_ARG = 4;
 	private static final String ERROR_MESSAGE_WRITER = "Problem with the File Writer";
 	private static final String ERROR_MESSAGE_READER = "Problem with the Reader";
-	
 
-	
-	public void deleteUserFromFile (String username) {
+	public void deleteUserFromFile(String username) {
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"));
 				FileWriter writer = new FileWriter("users.txt", true);) {
 			String line = bufferedReader.readLine();
@@ -47,7 +45,7 @@ public class UserFileEditor {
 			e1.printStackTrace();
 		}
 	}
-		
+
 	public void changeConfiguration(String username, String newConfig, int arg) {
 
 		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"));
@@ -64,9 +62,8 @@ public class UserFileEditor {
 					String lastnameInFile = tokens[THIRD_ARG];
 					String emailInFile = tokens[FOURTH_ARG];
 
-
-					line = usernameInFile + " " + passwordInFile + " " + firstnameInFile + " "
-							+ lastnameInFile + " " + emailInFile + "\n";
+					line = usernameInFile + " " + passwordInFile + " " + firstnameInFile + " " + lastnameInFile + " "
+							+ emailInFile + "\n";
 					builder.append(line);
 					line = bufferedReader.readLine();
 					continue;
@@ -86,6 +83,7 @@ public class UserFileEditor {
 			e1.printStackTrace();
 		}
 	}
+
 	public void writeUserInFile(AuthenticatedUser newUser) {
 		String userToWrite = newUser.toString();
 		try (FileWriter writer = new FileWriter("users.txt", true);) {
