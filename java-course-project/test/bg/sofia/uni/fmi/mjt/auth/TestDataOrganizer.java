@@ -3,7 +3,7 @@ package bg.sofia.uni.fmi.mjt.auth;
 import org.junit.Test;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 

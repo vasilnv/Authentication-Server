@@ -3,7 +3,7 @@ package bg.sofia.uni.fmi.mjt.auth.domain.users;
 import java.time.LocalDateTime;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 
 public class AuthenticatedUser {
@@ -15,7 +15,8 @@ public class AuthenticatedUser {
 	private int timesLoginFailed = 0;
 	private LocalDateTime blockedTime;
 	private boolean isBlocked = false;
-	
+	private String sessionID;
+
 	// TODO magic strings, delimeter
 	public AuthenticatedUser(String username, String pass, String firstName, String lastName, String email) {
 		super();
@@ -78,6 +79,14 @@ public class AuthenticatedUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getSessionID() {
+		return sessionID;
+	}
+
+	public void setSession(String session) {
+		this.sessionID = session;
+	}
 
 	public void incrementloginFailed() {
 		this.timesLoginFailed++;
@@ -93,14 +102,7 @@ public class AuthenticatedUser {
 		this.timesLoginFailed = 0;
 	}
 	
-	public void register(DataOrganizer dataOrganizer) {
-		Session session = new Session();
-		dataOrganizer.addSession(session);
-		dataOrganizer.addUserSession(this.username, session);
-		dataOrganizer.addSessionUser(this.username, session);
 
-		System.out.println("user registered");
-	}
 
 	@Override
 	public String toString() {

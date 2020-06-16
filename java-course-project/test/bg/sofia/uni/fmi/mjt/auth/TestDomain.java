@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 
 public class TestDomain {
@@ -81,7 +81,7 @@ public class TestDomain {
 	@Test
 	public void testRegisterSuccessful() throws IOException {
 		DataOrganizer data = new DataOrganizer();
-		Domain domain = Domain.getInstance(data);
+		SystemFacade domain = SystemFacade.getInstance(data);
 		AuthenticatedUser user = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
 		SocketChannel socketChannel = SocketChannel.open();
 		String message = domain.registerInSystem(socketChannel, user);
@@ -133,7 +133,7 @@ public class TestDomain {
 	private DataOrganizer dataOrg;
 
 	@InjectMocks
-	private Domain domainModel;
+	private SystemFacade domainModel;
 
 	@Test
 	public void isUserLoggedInUnSuccessul() throws IOException {

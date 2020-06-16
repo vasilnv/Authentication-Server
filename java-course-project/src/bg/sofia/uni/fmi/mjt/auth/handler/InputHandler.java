@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.CommandDistributor;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.SessionUpdate;
 
@@ -13,12 +13,12 @@ public class InputHandler {
 	private static final String ERROR_MESSAGE = "Problem with the Socket Channel";
 
 	private SocketChannel socketChannel = null;
-	private Domain domain = null;
+	private SystemFacade systemFacade = null;
 
-	public InputHandler(SocketChannel socketChannel, Domain domainInstance) {
+	public InputHandler(SocketChannel socketChannel, SystemFacade facadeInstance) {
 		this.socketChannel = socketChannel;
 		System.out.println("inputHandler created");
-		this.domain = domainInstance;
+		this.systemFacade = facadeInstance;
 	}
 
 	public void read() {
@@ -32,7 +32,7 @@ public class InputHandler {
 			}
 			String messageToServer = messageBuffer.toString();
 			CommandDistributor distributor = new CommandDistributor();
-			distributor.messageReceive(messageToServer, this.socketChannel, domain);
+			distributor.messageReceive(messageToServer, this.socketChannel, systemFacade);
 		} catch (IOException e) {
 			System.out.println(ERROR_MESSAGE);
 			e.printStackTrace();

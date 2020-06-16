@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.SessionUpdate;
 import bg.sofia.uni.fmi.mjt.auth.handler.InputHandler;
 
@@ -31,7 +31,7 @@ public class Server {
 			serverSocketChannel.configureBlocking(false);
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 			DataOrganizer dataOrganizer = new DataOrganizer();
-			Domain domain = Domain.getInstance(dataOrganizer);
+			SystemFacade domain = SystemFacade.getInstance(dataOrganizer);
 			domain.loadUsers();
 			Thread sessionUpdater = new SessionUpdate(dataOrganizer);
 			sessionUpdater.start();
@@ -44,7 +44,6 @@ public class Server {
 						try {
 							Thread.sleep(MILLISEC);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						continue;
@@ -61,8 +60,8 @@ public class Server {
 							InputHandler inputHandler = new InputHandler(socketChannel, domain);
 							inputHandler.read();
 						} else if (key.isAcceptable()) {
-	                        ServerSocketChannel sockChannel = (ServerSocketChannel) key.channel();
-	                        SocketChannel accept = sockChannel.accept();
+	                        ServerSocketChannel serverSocketChannelKey = (ServerSocketChannel) key.channel();
+	                        SocketChannel accept = serverSocketChannelKey.accept();
 	                        
 	                        accept.configureBlocking(false);
 	                        accept.register(selector, SelectionKey.OP_READ);

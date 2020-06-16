@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class UserFileEditor {

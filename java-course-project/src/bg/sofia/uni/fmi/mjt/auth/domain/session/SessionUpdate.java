@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.DataOrganizer;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
 
 public class SessionUpdate extends Thread{
@@ -28,7 +28,7 @@ public class SessionUpdate extends Thread{
 			Map<String, Session> sessions = this.dataOrganizer.getSessions();
 			for (Map.Entry<String, Session> entry : sessions.entrySet()) {
 				if(entry.getValue().getTimeOpened().plusSeconds(seconds).isBefore(LocalDateTime.now())) {
-					this.dataOrganizer.removeSession(entry.getKey());
+					this.dataOrganizer.removeSession(entry.getValue());
 				}
 			}
 			try {

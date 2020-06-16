@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.auth.domain.commands;
 
 import java.nio.channels.SocketChannel;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
@@ -15,12 +15,12 @@ public class CommandRegister implements CommandOperation {
 	private static final int FIFTH_ARG = 5;
 
 	private String message;
-	private Domain domain;
+	private SystemFacade systemFacade;
 	private SocketChannel socketChannel;
 
-	public CommandRegister(SocketChannel channel, String message, Domain domain) {
+	public CommandRegister(SocketChannel channel, String message, SystemFacade facade) {
 		this.message = message;
-		this.domain = domain;
+		this.systemFacade = facade;
 		this.socketChannel = channel;
 	}
 
@@ -36,6 +36,6 @@ public class CommandRegister implements CommandOperation {
 		String email = tokens[FIFTH_ARG];
 
 		AuthenticatedUser newUser = new AuthenticatedUser(username, password, firstname, lastname, email);
-		return domain.registerInSystem(socketChannel, newUser);
+		return systemFacade.registerInSystem(socketChannel, newUser);
 	}
 }

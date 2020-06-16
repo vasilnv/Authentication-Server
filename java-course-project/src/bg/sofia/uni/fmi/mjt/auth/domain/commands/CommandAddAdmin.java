@@ -2,17 +2,17 @@ package bg.sofia.uni.fmi.mjt.auth.domain.commands;
 
 import java.nio.channels.SocketChannel;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 
 public class CommandAddAdmin implements CommandOperation{
 	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 
 	private String message;
-	private Domain domain;
+	private SystemFacade domain;
 	private SocketChannel socketChannel;
 
-	public CommandAddAdmin(SocketChannel channel, String message, Domain domain) {
+	public CommandAddAdmin(SocketChannel channel, String message, SystemFacade domain) {
 		this.message = message;
 		this.domain = domain;
 		this.socketChannel = channel;
@@ -21,7 +21,7 @@ public class CommandAddAdmin implements CommandOperation{
 	@Override
 	public String execute() {
 		String[] tokens = message.split(" ");
-		String currUsername = Domain.getDataOrganizer().getChannelsByUsername().get(socketChannel);
+		String currUsername = SystemFacade.getDataOrganizer().getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
 		String usernameToMakeAdmin = tokens[SECOND_ARG];
 		String message = domain.addAdmin(currUsername, usernameToMakeAdmin, currSessionID, socketChannel);

@@ -2,7 +2,7 @@ package bg.sofia.uni.fmi.mjt.auth.domain.commands;
 
 import java.nio.channels.SocketChannel;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
@@ -14,10 +14,10 @@ public class CommandLogIn implements CommandOperation {
 	private static final int THIRD_ARG = 3;
 
 	private String message;
-	private Domain domain;
+	private SystemFacade domain;
 	SocketChannel socketChannel;
 
-	public CommandLogIn(SocketChannel channel, String message, Domain domain) {
+	public CommandLogIn(SocketChannel channel, String message, SystemFacade domain) {
 		this.message = message;
 		this.domain = domain;
 		this.socketChannel = channel;

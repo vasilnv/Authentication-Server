@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.UserFileEditor;
+import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
@@ -29,8 +30,6 @@ public class DataOrganizer {
 	private Map<String, SocketChannel> usernamesByChannel = new HashMap<>();
 
 	private Map<String, Session> sessions = new ConcurrentHashMap<>(); // sessionID - session
-	private Map<String, String> usersSessions = new ConcurrentHashMap<>(); // username - sessionID
-	private Map<String, String> sessionsUsers = new ConcurrentHashMap<>(); // sessionID - username
 
 	private Set<String> admins = new HashSet<>();
 
@@ -55,12 +54,7 @@ public class DataOrganizer {
 	public Map<String, SocketChannel> getUsernamesByChannel() {
 		return usernamesByChannel;
 	}
-	public Map<String, String> getUsersSessions() {
-		return usersSessions;
-	}
-	public Map<String, String> getSessionsUsers() {
-		return sessionsUsers;
-	}
+
 	public Map<String, AuthenticatedUser> getUsers() {
 		return users;
 	}
@@ -92,22 +86,22 @@ public class DataOrganizer {
 		sessions.put(session.getId(), session);
 	}
 
-	public void removeSession(String sessionID) {
-		sessions.remove(sessionID);
-		String usernameSession = sessionsUsers.get(sessionID);
-		sessionsUsers.remove(sessionID);
-		usersSessions.remove(usernameSession);
+	public void removeSession(Session session) {
+		sessions.remove(session.getId());
+		String usernameSession = session.getUsername();
+		session.setUsername(null);
+		users.get(usernameSession).setSession(null);
 		SocketChannel channel = usernamesByChannel.get(usernameSession);
 		OutputHandler output = new OutputHandler(channel);
 		output.write("Your session expired. Please login again.");
 	}
 
 	public void addUserSession(String username, Session session) {
-		usersSessions.put(username, session.getId());
+		users.get(username).setSession(session.getId());
 	}
 
 	public void addSessionUser(String username, Session session) {
-		sessionsUsers.put(session.getId(), username);
+		session.setUsername(username);
 	}
 
 	public String changeUsername(String oldUsername, String newUsername) {
@@ -115,10 +109,8 @@ public class DataOrganizer {
 		AuthenticatedUser tmpUser = users.get(oldUsername);
 		users.remove(oldUsername);
 		users.put(newUsername, tmpUser);
-		String oldSession = usersSessions.get(oldUsername);
-		usersSessions.remove(oldUsername);
-		usersSessions.put(newUsername, oldSession);
-		sessionsUsers.put(oldSession, newUsername);
+		String oldSession = users.get(oldUsername).getSessionID();
+		sessions.get(oldSession).setUsername(newUsername);
 		userFileEditor.changeConfiguration(oldUsername, newUsername, ZERO_ARG);
 		return newUsername;
 
@@ -153,4 +145,192 @@ public class DataOrganizer {
 	}
 
 
+	
+	
+	private String result;
+	
+	public String registerInSystem(SocketChannel socketChannel, AuthenticatedUser newUser) {
+		String username = newUser.getUsername();
+		if (!checkIfUserExists(username)) {
+			Session session = new Session();
+			addSession(session);
+			session.setUsername(username);
+			newUser.setSession(session.getId());
+			System.out.println("user registered with session ID :" + session.getId());
+
+			this.getUserFileEditor().writeUserInFile(newUser);
+			this.getChannelsByUsername().put(socketChannel, username);
+			this.getUsernamesByChannel().put(username, socketChannel);
+			this.getUsers().put(username, newUser);
+			if (this.getAdmins().isEmpty()) {
+				this.getAdmins().add(username);
+			}
+			result = "completed registration with sessionId: " + session.getId();
+		} else {
+			result = "unsuccessful registration";
+		}
+		return result;
+	}
+
+	public String logInByNameAndPass(String username, String password, SocketChannel socketChannel) {
+		if (this.checkIfUserExists(username) && this.checkIfUserIsBlocked(username)) {
+			result = "You are blocked";
+		} else if (this.checkIfUserExists(username)
+				&& this.getUsers().get(username).getPassword().equals(password)) {
+			Session session = new Session();
+			this.addSession(session);
+			this.getUsers().get(username).setSession(session.getId());
+			this.getSessions().get(session.getId()).setUsername(username);
+			this.getChannelsByUsername().put(socketChannel, username);
+			this.getUsernamesByChannel().put(username, socketChannel);
+
+			result = "successful login with sessionID: " + session.getId();
+
+		} else if (this.getUsers().containsKey(username)) {
+			this.getUsers().get(username).incrementloginFailed();
+			if (this.getUsers().get(username).getLoginFailed() == 3) {
+				this.getUsers().get(username).block();
+				this.getLogger().writeFailedLogin(socketChannel, username);
+				result = "You are blocked please try again in 50 seconds";
+				return result;
+			}
+			result = "unsuccessful login";
+		} else {
+			this.getLogger().writeFailedLogin(socketChannel, username);
+			result = "unsuccessful login";
+		}
+		return result;
+	}
+
+	public String logInBySession(String sessionId, SocketChannel socketChannel) {
+		if (this.getSessions().containsKey(sessionId)) {
+			String username = this.getSessions().get(sessionId).getUsername();
+			this.getChannelsByUsername().put(socketChannel, username);
+			this.getUsernamesByChannel().put(username, socketChannel);
+			this.getUsers().get(username).setSession(sessionId);
+			this.getSessions().get(sessionId).setUsername(username);
+
+			result = "successful login with sessionID: " + sessionId;
+		} else {
+			result = "unsuccessful login";
+		}
+		return result;
+	}
+
+	public String resetPassword(String userSession, String username, String oldPassword, String newPassword,
+			SocketChannel socketChannel) {
+		if (this.checkIfUserExists(username) && !isUserLoggedIn(userSession)) {
+			result = "not logged in";
+		} else if (this.checkIfUserExists(username)
+				&& this.getChannelsByUsername().get(socketChannel).equals(username)
+				&& this.getUsers().get(username).getPassword().equals(oldPassword)) {
+			this.changePassword(username, newPassword);
+			result = "succesfully changed password";
+		} else {
+			result = "unsuccessfully changed password";
+		}
+		return result;
+	}
+
+	public String updateUser(String[] tokens, String currSessionID, String username, SocketChannel socketChannel) {
+		if (!isUserLoggedIn(currSessionID)) {
+			result = "not logged in";
+		} else if (getSessions().containsKey(currSessionID)
+				&& getUsers().get(username).getSessionID().equals(currSessionID)) {
+			for (int i = THIRD_ARG; i < tokens.length; i += SECOND_ARG) {
+				if (tokens[i - 1].equals("new-username")) {
+					changeUsername(username, tokens[i]);
+				}
+				if (tokens[i - 1].equals("new-firstname")) {
+					changeFirstName(username, tokens[i]);
+				}
+				if (tokens[i - 1].equals("new-lastname")) {
+					changeLastName(username, tokens[i]);
+				}
+				if (tokens[i - 1].equals("new-email")) {
+					changeEmail(username, tokens[i]);
+				}
+			}
+			result = "successful update";
+		} else {
+			result = "unsuccesful update";
+		}
+		return result;
+	}
+
+	public String logout(String currSessionID, String currUsername, SocketChannel socketChannel) {
+		if (!isUserLoggedIn(currSessionID)) {
+			result = "not logged in";
+		} else if (currUsername.equals(getSessions().get(currSessionID).getUsername())) {
+			getSessions().remove(currSessionID);
+			getUsers().get(currUsername).setSession(null);
+			result = "login again";
+		} else {
+			result = "unsuccessful logout";
+		}
+		return result;
+	}
+
+	public String addAdmin(String currUsername, String usernameToMakeAdmin, String currSessionID,
+			SocketChannel socketChannel) {
+		getLogger().writeConfigChageStart(socketChannel, currUsername, usernameToMakeAdmin,
+				Command.ADD_ADMIN.getCommand());
+		if (!isUserLoggedIn(currSessionID)) {
+			result = "not logged in";
+		} else if (getAdmins().contains(currUsername)
+				&& getSessions().get(currSessionID).getUsername().equals(currUsername)) {
+			getAdmins().add(usernameToMakeAdmin);
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToMakeAdmin, true);
+			result = "successfully made admin";
+		} else {
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToMakeAdmin, false);
+			result = "unsuccessfully made admin";
+		}
+		return result;
+	}
+
+	public String removeAdmin(String currUsername, String usernameToRemoveAdmin, String currSessionID,
+			SocketChannel socketChannel) {
+		OutputHandler output = new OutputHandler(socketChannel);
+		getLogger().writeConfigChageStart(socketChannel, currUsername, usernameToRemoveAdmin,
+				Command.REMOVE_ADMIN.getCommand());
+		if (!isUserLoggedIn(currSessionID)) {
+			result = "not logged in";
+		} else if (getAdmins().contains(currUsername)
+				&& getSessions().get(currSessionID).getUsername().equals(currUsername)) {
+			getAdmins().remove(usernameToRemoveAdmin);
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToRemoveAdmin, true);
+			result = "successfully removed admin";
+		} else {
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToRemoveAdmin, false);
+			result = "unsuccessfully removed admin";
+		}
+		return result;
+	}
+
+	public String deleteUser(String currUsername, String usernameToDelete, String currSessionID,
+			SocketChannel socketChannel) {
+		getLogger().writeConfigChageStart(socketChannel, currUsername, usernameToDelete,
+				Command.DELETE_USER.getCommand());
+		if (!isUserLoggedIn(currSessionID)) {
+			result = "not logged in";
+		} else if (getAdmins().contains(currUsername)
+				&& getSessions().get(currSessionID).getUsername().equals(currUsername)) {
+			String userToDeleteSession = users.get(usernameToDelete).getSessionID();
+			users.remove(usernameToDelete);
+			if (userToDeleteSession != null) {
+				sessions.get(userToDeleteSession).setUsername(null);
+				users.get(usernameToDelete).setSession(null);
+			}
+			getAdmins().remove(usernameToDelete);
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToDelete, true);
+			getUserFileEditor().deleteUserFromFile(usernameToDelete);
+			result = "succesfully deleted user";
+		} else {
+			getLogger().writeConfigChageFinish(socketChannel, currUsername, usernameToDelete, false);
+			result = "unsuccessfully deleted user";
+		}
+		return result;
+	}
+	
 }
