@@ -1,11 +1,8 @@
 package bg.sofia.uni.fmi.mjt.auth.client;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.Channels;
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
 

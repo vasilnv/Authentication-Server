@@ -1,19 +1,9 @@
 package bg.sofia.uni.fmi.mjt.auth.domain;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.nio.channels.SocketChannel;
-import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
-import bg.sofia.uni.fmi.mjt.auth.FileEditors.UserFileEditor;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
 import bg.sofia.uni.fmi.mjt.auth.domain.repositories.SessionRepository;
 import bg.sofia.uni.fmi.mjt.auth.domain.repositories.UserRepository;
@@ -22,19 +12,26 @@ import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class Domain {
-	private static final int ITERATION_STEP_TWO = 2;
-	private static final int THIRD_ARG = 3;
+	private static Domain instance;
 
 	private AuditLog logger = new AuditLog();
 
 	private UserRepository userRepository = new UserRepository();
 	private SessionRepository sessionRepository = new SessionRepository();
+	private UserUpdater userUpdater = new UserUpdater(userRepository, sessionRepository);
 
 	private Map<SocketChannel, String> channelsByUsername = new HashMap<>();
 	private Map<String, SocketChannel> usernamesByChannel = new HashMap<>();
 
-	public Domain() {
+	private Domain() {
 
+	}
+
+	public static Domain getInstance() {
+		if (instance == null) {
+			instance = new Domain();
+		}
+		return instance;
 	}
 
 	public SessionRepository getSessionRepository() {
@@ -43,10 +40,6 @@ public class Domain {
 
 	public UserRepository getUserRepository() {
 		return this.userRepository;
-	}
-
-	public AuditLog getLogger() {
-		return logger;
 	}
 
 	public Map<SocketChannel, String> getChannelsByUsername() {
@@ -65,33 +58,6 @@ public class Domain {
 		SocketChannel channel = usernamesByChannel.get(usernameSession);
 		OutputHandler output = new OutputHandler(channel);
 		output.write("Your session expired. Please login again.");
-	}
-
-	public String changeUsername(String oldUsername, String newUsername) {
-		userRepository.updateUsername(oldUsername, newUsername);
-		String oldSession = userRepository.getUser(newUsername).getSessionID();
-		sessionRepository.getSession(oldSession).setUsername(newUsername);
-		return newUsername;
-	}
-
-	public String changeFirstName(String username, String firstName) {
-		userRepository.updateFirstName(username, firstName);
-		return firstName;
-	}
-
-	public String changeLastName(String username, String lastName) {
-		userRepository.updateLastName(username, lastName);
-		return lastName;
-	}
-
-	public String changeEmail(String username, String email) {
-		userRepository.updateEmail(username, email);
-		return email;
-	}
-
-	public String changePassword(String username, String password) {
-		userRepository.updatePassword(username, password);
-		return password;
 	}
 
 	private String result;
@@ -134,13 +100,13 @@ public class Domain {
 			userRepository.getUser(username).incrementloginFailed();
 			if (userRepository.getUser(username).getLoginFailed() == 3) {
 				userRepository.getUser(username).block();
-				this.getLogger().writeFailedLogin(socketChannel, username);
+				this.logger.writeFailedLogin(socketChannel, username);
 				result = "You are blocked please try again in 50 seconds";
 				return result;
 			}
 			result = "unsuccessful login";
 		} else {
-			this.getLogger().writeFailedLogin(socketChannel, username);
+			this.logger.writeFailedLogin(socketChannel, username);
 			result = "unsuccessful login";
 		}
 		return result;
@@ -168,7 +134,7 @@ public class Domain {
 		} else if (userRepository.checkIfUserExists(username)
 				&& this.channelsByUsername.get(socketChannel).equals(username)
 				&& userRepository.getUser(username).getPassword().equals(oldPassword)) {
-			this.changePassword(username, newPassword);
+			userUpdater.changePassword(username, newPassword);
 			result = "succesfully changed password";
 		} else {
 			result = "unsuccessfully changed password";
@@ -182,16 +148,16 @@ public class Domain {
 		} else if (sessionRepository.isUserLoggedIn(currSessionID)
 				&& userRepository.getUser(username).getSessionID().equals(currSessionID)) {
 			if (command.equals("new-username")) {
-				changeUsername(username, updatedData);
+				userUpdater.changeUsername(username, updatedData);
 			}
 			if (command.equals("new-firstname")) {
-				changeFirstName(username, updatedData);
+				userUpdater.changeFirstName(username, updatedData);
 			}
 			if (command.equals("new-lastname")) {
-				changeLastName(username, updatedData);
+				userUpdater.changeLastName(username, updatedData);
 			}
 			if (command.equals("new-email")) {
-				changeEmail(username, updatedData);
+				userUpdater.changeEmail(username, updatedData);
 			}
 			result = "successful update";
 		} else {
@@ -215,17 +181,17 @@ public class Domain {
 
 	public String addAdmin(String currUsername, String usernameToMakeAdmin, String currSessionID,
 			SocketChannel socketChannel) {
-		getLogger().writeConfigChangeStart(socketChannel, currUsername, usernameToMakeAdmin,
+		this.logger.writeConfigChangeStart(socketChannel, currUsername, usernameToMakeAdmin,
 				Command.ADD_ADMIN.getCommand());
 		if (!sessionRepository.isUserLoggedIn(currSessionID)) {
 			result = "not logged in";
 		} else if (userRepository.checkIfUserIsAdmin(currUsername)
 				&& sessionRepository.getSessionUsername(currSessionID).equals(currUsername)) {
 			userRepository.addAdmin(usernameToMakeAdmin);
-			getLogger().writeConfigChangeFinish(socketChannel, currUsername, usernameToMakeAdmin, true);
+			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToMakeAdmin, true);
 			result = "successfully made admin";
 		} else {
-			getLogger().writeConfigChangeFinish(socketChannel, currUsername, usernameToMakeAdmin, false);
+			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToMakeAdmin, false);
 			result = "unsuccessfully made admin";
 		}
 		return result;
@@ -233,17 +199,17 @@ public class Domain {
 
 	public String removeAdmin(String currUsername, String usernameToRemoveAdmin, String currSessionID,
 			SocketChannel socketChannel) {
-		getLogger().writeConfigChangeStart(socketChannel, currUsername, usernameToRemoveAdmin,
+		this.logger.writeConfigChangeStart(socketChannel, currUsername, usernameToRemoveAdmin,
 				Command.REMOVE_ADMIN.getCommand());
 		if (!sessionRepository.isUserLoggedIn(currSessionID)) {
 			result = "not logged in";
 		} else if (userRepository.checkIfUserIsAdmin(currUsername)
 				&& sessionRepository.getSessionUsername(currSessionID).equals(currUsername)) {
 			userRepository.removeAdmin(usernameToRemoveAdmin);
-			getLogger().writeConfigChangeFinish(socketChannel, currUsername, usernameToRemoveAdmin, true);
+			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToRemoveAdmin, true);
 			result = "successfully removed admin";
 		} else {
-			getLogger().writeConfigChangeFinish(socketChannel, currUsername, usernameToRemoveAdmin, false);
+			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToRemoveAdmin, false);
 			result = "unsuccessfully removed admin";
 		}
 		return result;

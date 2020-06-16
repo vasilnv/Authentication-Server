@@ -3,10 +3,8 @@ package bg.sofia.uni.fmi.mjt.auth.handler;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-
 import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.commands.CommandDistributor;
-import bg.sofia.uni.fmi.mjt.auth.domain.session.SessionUpdate;
 
 public class InputHandler {
 	private static final int BUFFER_CAPACITY = 1024;

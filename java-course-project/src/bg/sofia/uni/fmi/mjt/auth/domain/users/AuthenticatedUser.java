@@ -2,10 +2,6 @@ package bg.sofia.uni.fmi.mjt.auth.domain.users;
 
 import java.time.LocalDateTime;
 
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
-import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
-
 public class AuthenticatedUser {
 	private String username;
 	private String password;

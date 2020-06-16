@@ -1,34 +1,27 @@
 package bg.sofia.uni.fmi.mjt.auth.domain.session;
 
-import java.nio.ByteBuffer;
-import java.nio.channels.SocketChannel;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
-import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
 
 public class SessionUpdate extends Thread{
 	private static final int THREAD_SLEEP = 1000;
-	private Domain dataOrganizer = null;
+	private Domain domain = null;
 	private static final String ERROR_MESSAGE = "Problem with Thread";
 	
 	private long seconds = 100;
-	public SessionUpdate(Domain organizer) {
+	public SessionUpdate(Domain domain) {
 		setDaemon(true);
-		this.dataOrganizer = organizer;
+		this.domain = domain;
 	}
 	
 	@Override
 	public void run() {
 		while(true) {
-			Map<String, Session> sessions = this.dataOrganizer.getSessionRepository().getSessions();
+			Map<String, Session> sessions = this.domain.getSessionRepository().getSessions();
 			for (Map.Entry<String, Session> entry : sessions.entrySet()) {
 				if(entry.getValue().getTimeOpened().plusSeconds(seconds).isBefore(LocalDateTime.now())) {
-					this.dataOrganizer.removeSession(entry.getValue());
+					this.domain.removeSession(entry.getValue());
 				}
 			}
 			try {

@@ -1,11 +1,7 @@
 package bg.sofia.uni.fmi.mjt.auth.domain;
 
 import java.nio.channels.SocketChannel;
-import bg.sofia.uni.fmi.mjt.auth.domain.commands.Command;
-import bg.sofia.uni.fmi.mjt.auth.domain.repositories.UserRepository;
-import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
-import bg.sofia.uni.fmi.mjt.auth.handler.OutputHandler;
 
 public class SystemFacade {
 	private static Domain domain;

@@ -11,7 +11,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.UserFileEditor;
-import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class UserRepository {

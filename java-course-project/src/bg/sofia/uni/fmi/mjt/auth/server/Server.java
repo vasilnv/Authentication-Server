@@ -2,14 +2,11 @@ package bg.sofia.uni.fmi.mjt.auth.server;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
@@ -30,7 +27,7 @@ public class Server {
 			serverSocketChannel.bind(new InetSocketAddress(HOST_NAME, HOST_PORT));
 			serverSocketChannel.configureBlocking(false);
 			serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-			Domain dataOrganizer = new Domain();
+			Domain dataOrganizer = Domain.getInstance();
 			SystemFacade systemFacade = SystemFacade.getInstance(dataOrganizer);
 			systemFacade.loadUsers();
 			Thread sessionUpdater = new SessionUpdate(dataOrganizer);
