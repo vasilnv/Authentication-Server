@@ -6,11 +6,12 @@ import java.nio.channels.SocketChannel;
 import java.time.LocalDateTime;
 
 public class AuditLog {
-	private static int id = 0;
+	private static final String AUDIT_LOG_FILE_NAME = "AuditLog.txt";
 	private static final String ERROR_MESSAGE_WRITER = "Problem with the File Writer";
+	private static int id = 0;
 	
 	public void writeFailedLogin(SocketChannel socket, String name) {
-		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
+		try (FileWriter writer = new FileWriter(AUDIT_LOG_FILE_NAME, true);) {
 			writer.write("time: [" + LocalDateTime.now() + "] - " + "operation type: failed login - " + "username: "
 					+ name + " - IP:" + socket.getLocalAddress() + "\n");
 		} catch (IOException e) {
@@ -20,7 +21,7 @@ public class AuditLog {
 	}
 
 	public void writeConfigChangeStart(SocketChannel socketDoer, String doer, String affected, String command) {
-		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
+		try (FileWriter writer = new FileWriter(AUDIT_LOG_FILE_NAME, true);) {
 			id++;
 			writer.write("time: [" + LocalDateTime.now() + "] - " + "ID:" + id
 					+ " - operation type: configuration change - " + "doer: " + doer + " - IP:"
@@ -32,7 +33,7 @@ public class AuditLog {
 	}
 
 	public void writeConfigChangeFinish(SocketChannel socketDoer, String doer, String affected, boolean isCorrect) {
-		try (FileWriter writer = new FileWriter("AuditLog.txt", true);) {
+		try (FileWriter writer = new FileWriter(AUDIT_LOG_FILE_NAME, true);) {
 			id++;
 			String commandSuccess;
 			if(isCorrect) {

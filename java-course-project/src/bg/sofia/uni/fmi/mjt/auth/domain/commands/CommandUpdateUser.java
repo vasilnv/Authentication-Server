@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandUpdateUser implements CommandOperation{
+	private static final String STRING_DELIMITER = " ";
 	private static final int FIRST_ARG = 1;
 	private static final int ITERATION_STEP_TWO = 2;
 	private static final int THIRD_ARG = 3;
@@ -21,7 +22,7 @@ public class CommandUpdateUser implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String username = domain.getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
 		String result = "wrong command";

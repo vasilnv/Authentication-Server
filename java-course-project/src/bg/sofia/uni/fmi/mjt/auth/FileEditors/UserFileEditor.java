@@ -9,87 +9,86 @@ import java.io.IOException;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class UserFileEditor {
-	private static final int ZERO_ARG = 0;
-	private static final int FIRST_ARG = 1;
-	private static final int SECOND_ARG = 2;
-	private static final int THIRD_ARG = 3;
-	private static final int FOURTH_ARG = 4;
-	private static final String ERROR_MESSAGE_WRITER = "Problem with the File Writer";
-	private static final String ERROR_MESSAGE_READER = "Problem with the Reader";
+	private static final String STRING_END_OF_LINE = "\n";
+	private static final String STRING_DELIMITER = " ";
+	private static final String USERS_FILE_NAME = "users.txt";
+	private static final String WRITER_ERROR_MESSAGE = "Problem with the File Writer";
+	private static final String READER_ERROR_MESSAGE = "Problem with the Reader";
 
 	public void deleteUserFromFile(String username) {
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"));
-				FileWriter writer = new FileWriter("users.txt", true);) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(USERS_FILE_NAME));
+				FileWriter writer = new FileWriter(USERS_FILE_NAME, true);) {
 			String line = bufferedReader.readLine();
 			StringBuilder builder = new StringBuilder();
 			while (line != null) {
-				String[] tokens = line.split(" ");
-				if (username.equals(tokens[ZERO_ARG])) {
+				String[] tokens = line.split(STRING_DELIMITER);
+				if (username.equals(tokens[0])) {
 					line = bufferedReader.readLine();
 					continue;
 				}
 
 				builder.append(line);
-				builder.append("\n");
+				builder.append(STRING_END_OF_LINE);
 				line = bufferedReader.readLine();
 			}
-			FileWriter writer2 = new FileWriter("users.txt", false);
+			FileWriter writer2 = new FileWriter(USERS_FILE_NAME, false);
 			writer.write(builder.toString());
 		} catch (FileNotFoundException e) {
-			System.out.println(ERROR_MESSAGE_READER);
+			System.out.println(READER_ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (IOException e1) {
-			System.out.println(ERROR_MESSAGE_WRITER);
+			System.out.println(WRITER_ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 	}
 
 	public void changeConfiguration(String username, String newConfig, int arg) {
 
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("users.txt"));
-				FileWriter writer = new FileWriter("users.txt", true);) {
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(USERS_FILE_NAME));
+				FileWriter writer = new FileWriter(USERS_FILE_NAME, true);) {
 			String line = bufferedReader.readLine();
 			StringBuilder builder = new StringBuilder();
 			while (line != null) {
-				String[] tokens = line.split(" ");
-				if (username.equals(tokens[ZERO_ARG])) {
+				String[] tokens = line.split(STRING_DELIMITER);
+				int index = 0;
+				if (username.equals(tokens[index])) {
 					tokens[arg] = newConfig;
-					String usernameInFile = tokens[ZERO_ARG];
-					String passwordInFile = tokens[FIRST_ARG];
-					String firstnameInFile = tokens[SECOND_ARG];
-					String lastnameInFile = tokens[THIRD_ARG];
-					String emailInFile = tokens[FOURTH_ARG];
+					String usernameInFile = tokens[index++];
+					String passwordInFile = tokens[index++];
+					String firstnameInFile = tokens[index++];
+					String lastnameInFile = tokens[index++];
+					String emailInFile = tokens[index++];
 
-					line = usernameInFile + " " + passwordInFile + " " + firstnameInFile + " " + lastnameInFile + " "
-							+ emailInFile + "\n";
+					line = usernameInFile + STRING_DELIMITER + passwordInFile + STRING_DELIMITER + firstnameInFile + STRING_DELIMITER + lastnameInFile + STRING_DELIMITER
+							+ emailInFile + STRING_END_OF_LINE;
 					builder.append(line);
 					line = bufferedReader.readLine();
 					continue;
 				}
 
 				builder.append(line);
-				builder.append("\n");
+				builder.append(STRING_END_OF_LINE);
 				line = bufferedReader.readLine();
 			}
-			FileWriter writer2 = new FileWriter("users.txt", false);
+			FileWriter writer2 = new FileWriter(USERS_FILE_NAME, false);
 			writer.write(builder.toString());
 		} catch (FileNotFoundException e) {
-			System.out.println(ERROR_MESSAGE_READER);
+			System.out.println(READER_ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (IOException e1) {
-			System.out.println(ERROR_MESSAGE_WRITER);
+			System.out.println(WRITER_ERROR_MESSAGE);
 			e1.printStackTrace();
 		}
 	}
 
 	public void writeUserInFile(AuthenticatedUser newUser) {
 		String userToWrite = newUser.toString();
-		try (FileWriter writer = new FileWriter("users.txt", true);) {
+		try (FileWriter writer = new FileWriter(USERS_FILE_NAME, true);) {
 
 			writer.write(userToWrite);
-			writer.write("\n");
+			writer.write(STRING_END_OF_LINE);
 		} catch (IOException e) {
-			System.out.println(ERROR_MESSAGE_WRITER);
+			System.out.println(WRITER_ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 	}

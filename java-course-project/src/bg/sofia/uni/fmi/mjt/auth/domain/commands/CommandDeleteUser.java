@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandDeleteUser implements CommandOperation{
+	private static final String STRING_DELIMITER = " ";
 	private static final int FIRST_ARG = 1;
 	private static final int SECOND_ARG = 2;
 
@@ -20,7 +21,7 @@ public class CommandDeleteUser implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String currUsername = domain.getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[FIRST_ARG];
 		String usernameToDeleteUser = tokens[SECOND_ARG];

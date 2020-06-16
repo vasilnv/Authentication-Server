@@ -6,6 +6,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 
 public class CommandLogIn implements CommandOperation {
+	private static final String STRING_DELIMITER = " ";
 	private static final String STRING_ENCODER = "javaIsCool";
 	private static final int USERNAME_ARGUMENT = 1;
 	private static final int PASSWORD_ARGUMENT = 2;
@@ -24,7 +25,7 @@ public class CommandLogIn implements CommandOperation {
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 
 		if (tokens.length == THREE_NUMBER_OF_TOKENS) {
 			String username = tokens[USERNAME_ARGUMENT];

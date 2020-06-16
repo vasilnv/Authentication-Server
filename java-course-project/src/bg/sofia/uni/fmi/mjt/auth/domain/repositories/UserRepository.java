@@ -98,6 +98,7 @@ public class UserRepository {
 	public void addUser(String username, AuthenticatedUser user) {
 		this.users.put(username, user);
 	}
+
 	public void writeUserInFile(String username, AuthenticatedUser user) {
 		this.userFileEditor.writeUserInFile(user);
 	}

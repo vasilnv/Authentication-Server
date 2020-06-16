@@ -7,12 +7,8 @@ import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class CommandRegister implements CommandOperation {
+	private static final String STRING_DELIMITER = " ";
 	private static final String STRING_ENCODER = "javaIsCool";
-	private static final int FIRST_ARG = 1;
-	private static final int SECOND_ARG = 2;
-	private static final int THIRD_ARG = 3;
-	private static final int FOURTH_ARG = 4;
-	private static final int FIFTH_ARG = 5;
 
 	private String message;
 	private Domain domain;
@@ -26,14 +22,14 @@ public class CommandRegister implements CommandOperation {
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
-
-		String username = tokens[FIRST_ARG];
-		String password = tokens[SECOND_ARG];
+		String[] tokens = message.split(STRING_DELIMITER);
+		int index = 1;
+		String username = tokens[index++];
+		String password = tokens[index++];
 		password = PasswordEncoder.encodePass(password, STRING_ENCODER);
-		String firstname = tokens[THIRD_ARG];
-		String lastname = tokens[FOURTH_ARG];
-		String email = tokens[FIFTH_ARG];
+		String firstname = tokens[index++];
+		String lastname = tokens[index++];
+		String email = tokens[index++];
 
 		AuthenticatedUser newUser = new AuthenticatedUser(username, password, firstname, lastname, email);
 		return domain.registerInSystem(socketChannel, newUser);

@@ -7,7 +7,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
 
 public class SessionRepository {
-	private Map<String, Session> sessions = new ConcurrentHashMap<>(); // sessionID - session
+	private Map<String, Session> sessions = new ConcurrentHashMap<>();
 
 	public SessionRepository() {
 		

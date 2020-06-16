@@ -5,6 +5,7 @@ import java.nio.channels.SocketChannel;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 
 public class CommandRemoveAdmin implements CommandOperation{
+	private static final String STRING_DELIMITER = " ";
 	private static final int SESSION_ID_ARGUMENT = 1;
 	private static final int USERNAME_ARGUMENT = 2;
 
@@ -20,7 +21,7 @@ public class CommandRemoveAdmin implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String currUsername = domain.getChannelsByUsername().get(socketChannel);
 		String currSessionID = tokens[SESSION_ID_ARGUMENT];
 		String usernameToRemoveAdmin = tokens[USERNAME_ARGUMENT];

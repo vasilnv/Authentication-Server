@@ -6,6 +6,7 @@ import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
 import bg.sofia.uni.fmi.mjt.auth.domain.PasswordEncoder;
 
 public class CommandResetPassword implements CommandOperation{
+	private static final String STRING_DELIMITER = " ";
 	private static final String STRING_ENCODER = "javaIsCool";
 	private static final int SESSION_ID_ARGUMENT = 1;
 	private static final int USERNAME_ARGUMENT = 2;
@@ -24,7 +25,7 @@ public class CommandResetPassword implements CommandOperation{
 
 	@Override
 	public String execute() {
-		String[] tokens = message.split(" ");
+		String[] tokens = message.split(STRING_DELIMITER);
 		String userSession = tokens[SESSION_ID_ARGUMENT];
 		String username = tokens[USERNAME_ARGUMENT];
 		String oldPassword = tokens[OLD_PASSWORD_ARGUMENT];

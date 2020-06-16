@@ -13,7 +13,6 @@ public class AuthenticatedUser {
 	private boolean isBlocked = false;
 	private String sessionID;
 
-	// TODO magic strings, delimeter
 	public AuthenticatedUser(String username, String pass, String firstName, String lastName, String email) {
 		super();
 		this.username = username;
@@ -55,7 +54,7 @@ public class AuthenticatedUser {
 	public boolean getIsBlocked() {
 		return this.isBlocked;
 	}
-	
+
 	public void setPassword(String pass) {
 		this.password = pass;
 	}
@@ -75,7 +74,7 @@ public class AuthenticatedUser {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getSessionID() {
 		return sessionID;
 	}
@@ -97,8 +96,6 @@ public class AuthenticatedUser {
 		this.isBlocked = false;
 		this.timesLoginFailed = 0;
 	}
-	
-
 
 	@Override
 	public String toString() {
