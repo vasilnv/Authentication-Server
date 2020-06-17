@@ -380,6 +380,3 @@ time: [2020-06-17T00:56:20.069547400] - ID:1 - operation type: configuration cha
 time: [2020-06-17T00:56:20.070603900] - ID:2 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
 time: [2020-06-17T00:56:32.099151100] - ID:3 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - affected: tosho - remove-admin-user
 time: [2020-06-17T00:56:32.099151100] - ID:4 - operation type: configuration change - doer: gogo - IP:/127.0.0.1:7777 - successful
-time: [2020-06-17T01:05:54.382025500] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
-time: [2020-06-17T01:07:14.946158300] - operation type: failed login - username: gogoo - IP:/127.0.0.1:7777
-time: [2020-06-17T01:09:50.983549600] - operation type: failed login - username: gogo - IP:/127.0.0.1:7777
