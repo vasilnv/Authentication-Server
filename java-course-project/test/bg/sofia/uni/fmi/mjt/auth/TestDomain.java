@@ -3,9 +3,7 @@ package bg.sofia.uni.fmi.mjt.auth;
 import java.io.IOException;
 import java.nio.channels.SocketChannel;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,349 +17,453 @@ import static org.junit.Assert.*;
 
 import bg.sofia.uni.fmi.mjt.auth.FileEditors.AuditLog;
 import bg.sofia.uni.fmi.mjt.auth.domain.Domain;
+import bg.sofia.uni.fmi.mjt.auth.domain.UserUpdater;
+import bg.sofia.uni.fmi.mjt.auth.domain.repositories.SessionRepository;
+import bg.sofia.uni.fmi.mjt.auth.domain.repositories.UserRepository;
 import bg.sofia.uni.fmi.mjt.auth.domain.users.AuthenticatedUser;
-import bg.sofia.uni.fmi.mjt.auth.domain.SystemFacade;
 import bg.sofia.uni.fmi.mjt.auth.domain.session.Session;
 
 public class TestDomain {
-	@Test
-	public void testIfAddsSessionsCorrectly() {
-		Session mockSession = mock(Session.class);
-		when(mockSession.getId()).thenReturn("1");
-		Domain data = new Domain();
-		data.addSession(mockSession);
-		assertTrue(data.getSessions().containsKey(mockSession.getId()));
-	}
-
-	@Test
-	public void testIfAddsUsersSessionsCorrectly() {
-		Session session = mock(Session.class);
-		String username = "gogo";
-		when(session.getId()).thenReturn("1");
-		Domain data = new Domain();
-		data.addUserSession(username, session);
-		assertTrue(data.getUsersSessions().containsKey(username));
-	}
-
-	@Test
-	public void testIfAddsSessionsUsersCorrectly() {
-		Session session = mock(Session.class);
-		String username = "gogo";
-		when(session.getId()).thenReturn("1");
-		Domain data = new Domain();
-		data.addSessionUser(username, session);
-		assertTrue(data.getSessionsUsers().containsKey(session.getId()));
-	}
-
-	@Test
-	public void testRegisterUnsuccessful() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.checkIfUserExists("gogo")).thenReturn(true);
-		AuthenticatedUser newUser = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		String message = domainModel.registerInSystem(socketChannel, newUser);
-		assertEquals(message, "unsuccessful registration");
-	}
-
-	@Test
-	public void testRegister() throws IOException {
-		AuthenticatedUser user = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		Domain data = new Domain();
-		Session session = mock(Session.class);
-		when(session.getId()).thenReturn("1");
-		data.addSession(session);
-		data.addUserSession("gogo", session);
-		data.addSessionUser("gogo", session);
-		Map<String, String> usersSessions = new HashMap<>();
-		usersSessions.put("gogo", "1");
-		assertEquals(usersSessions.get("gogo"), data.getUsersSessions().get("gogo"));
-
-	}
-
-	@Test
-	public void testRegisterSuccessful() throws IOException {
-		Domain data = new Domain();
-		SystemFacade domain = SystemFacade.getInstance(data);
-		AuthenticatedUser user = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		SocketChannel socketChannel = SocketChannel.open();
-		String message = domain.registerInSystem(socketChannel, user);
-		assertTrue(message.contains("completed registration"));
-	}
-
-	@Test
-	public void isUserLoggedInSuccessful() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		AuthenticatedUser newUser = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		when(dataOrg.checkIfUserExists("gogo")).thenReturn(true);
-		when(dataOrg.checkIfUserIsBlocked("gogo")).thenReturn(false);
-		Map<String, AuthenticatedUser> users = new HashMap<>();
-		users.put("gogo", newUser);
-		when(dataOrg.getUsers()).thenReturn(users);
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("0", session);
-
-		doNothing().when(dataOrg).addSession(session);
-		String message = domainModel.logInByNameAndPassword("gogo", "gogo", socketChannel);
-		assertTrue(message.contains("successful login with"));
-
-	}
-
-	@Test
-	public void isUserLoggedInUnSuccessful() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		AuthenticatedUser newUser = new AuthenticatedUser("gogo", "gogo", "gogo", "gogo", "gogo");
-		when(dataOrg.checkIfUserExists("gogo")).thenReturn(false);
-		when(dataOrg.checkIfUserIsBlocked("gogo")).thenReturn(false);
-		Map<String, AuthenticatedUser> users = new HashMap<>();
-		users.put("gogo", newUser);
-		when(dataOrg.getUsers()).thenReturn(users);
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("0", session);
-
-		doNothing().when(dataOrg).addSession(session);
-		String message = domainModel.logInByNameAndPassword("gogo", "gogo", socketChannel);
-		assertTrue(message.contains("unsuccessful login"));
-
-	}
 
 	
 	@Mock
-	private Domain dataOrg;
-
+	private UserRepository userRepository;
+	@Mock
+	private SessionRepository sessionRepository;
+	@Mock
+	private AuthenticatedUser user;
+	@Mock
+	private Map<SocketChannel, String> channelsByUsername;
+	@Mock
+	private UserUpdater userUpdater;
+	@Mock
+	private AuditLog logger;
+	
 	@InjectMocks
-	private SystemFacade domainModel;
+	private Domain domain;
 
-	@Test
-	public void isUserLoggedInUnSuccessul() throws IOException {
+	@Before
+	public void init() {
 		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.checkIfUserExists("gogog")).thenReturn(false);
-		when(dataOrg.checkIfUserIsBlocked("gogog")).thenReturn(false);
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		String message = domainModel.logInByNameAndPassword("gogog", "gogo", socketChannel);
-		assertTrue(message.contains("unsuccessful login"));
-
-	}
-
-	@Test
-	public void isUserBlockedSuccess() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.checkIfUserExists("gogog")).thenReturn(true);
-		when(dataOrg.checkIfUserIsBlocked("gogog")).thenReturn(true);
-		String message = domainModel.logInByNameAndPassword("gogog", "gogo", socketChannel);
-
-		assertTrue(message.contains("You are blocked"));
-
-	}
-
-	@Test
-	public void isUserSessionLoginSuccessful() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("1", session);
-
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.getSessions()).thenReturn(sessions);
-		String message = domainModel.logInBySession("1", socketChannel);
-		assertTrue(message.contains("successful login with"));
-
-	}
-
-	@Test
-	public void isUserSessionLoginFailed() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("0", session);
-
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.getSessions()).thenReturn(sessions);
-		String message = domainModel.logInBySession("1", socketChannel);
-		assertFalse(message.contains("successful login with"));
-
-	}
-
-	@Test
-	public void testResetPasswordNotLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.checkIfUserExists("gogo")).thenReturn(true);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(false);
-		String message = domainModel.resetPassword("1", "gogo", " ", " ", socketChannel);
-		assertEquals(message, "not logged in");
-
-	}
-
-	@Test
-	public void testResetPasswordUnSuccess() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.checkIfUserExists("gogo")).thenReturn(false);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
-		String message = domainModel.resetPassword("1", "gogo", " ", " ", socketChannel);
-		assertEquals(message, "unsuccessfully changed password");
-
-	}
-
-	@Test
-	public void testUpdateUserNotLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(false);
-		String[] tokens = { "update", "alabala" };
-		String message = domainModel.updateUser(tokens, "1", "gogo", socketChannel);
-		assertEquals(message, "not logged in");
-
-	}
-
-	@Test
-	public void testLogoutNotLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(false);
-		String message = domainModel.logout("1", "gogo", socketChannel);
-		assertEquals(message, "not logged in");
-
-	}
-	@Test
-	public void testLogoutSuccess() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
-
-		HashMap<String, String> sessionsUsers = new HashMap<>();
-		sessionsUsers.put("1", "gogo");
-		
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("1", session);
-
-		when(dataOrg.getSessionsUsers()).thenReturn(sessionsUsers);
-		when(dataOrg.getSessions()).thenReturn(sessions);
-
-		String message = domainModel.logout("1", "gogo", socketChannel);
-		assertEquals(message, "login again");
-
-	}
-
-	@Test
-	public void testLogoutFail() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
-
-		HashMap<String, String> sessionsUsers = new HashMap<>();
-		sessionsUsers.put("1", "gogo");
-		
-		HashMap<String, Session> sessions = new HashMap<>();
-		Session session = new Session();
-		sessions.put("1", session);
-
-		when(dataOrg.getSessionsUsers()).thenReturn(sessionsUsers);
-		when(dataOrg.getSessions()).thenReturn(sessions);
-
-		String message = domainModel.logout("1", "gogog", socketChannel);
-		assertEquals(message, "unsuccessful logout");
-
 	}
 	
 	@Test
-	public void testAddAdminNotLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(false);
-		String message = domainModel.addAdmin("gogo", "jojo", "1", socketChannel);
-		assertEquals(message, "not logged in");
+	public void testRegisterInSystemUnsuccessfully() throws IOException {
+		SocketChannel channel = SocketChannel.open();
+		when(user.getUsername()).thenReturn("gogo");
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
 		
+		String result = domain.registerInSystem(channel, user);
+		
+		assertEquals("unsuccessful registration", result);
 	}
 
 	@Test
-	public void testAddAdminLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
-		SocketChannel socketChannel = SocketChannel.open();
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
+	public void testRegisterInSystemSuccessfully() throws IOException {
+		SocketChannel channel = SocketChannel.open();
+		AuthenticatedUser user1 = Mockito.mock(AuthenticatedUser.class);
+		when(user1.getUsername()).thenReturn("gogo");
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(false);
 		
-		Set<String> admins = new HashSet<>();
-		admins.add("gogo");
-
-		HashMap<String, String> sessionsUsers = new HashMap<>();
-		sessionsUsers.put("1", "gogo");
+		String result = domain.registerInSystem(channel, user1);
 		
-		when(dataOrg.getSessionsUsers()).thenReturn(sessionsUsers);
-
-
-		when(dataOrg.getAdmins()).thenReturn(admins);
-		String message = domainModel.addAdmin("gogo", "jojo", "1", socketChannel);
-		assertEquals(message, "successfully made admin");
-		
-	}
+		assertTrue(result.contains("completed registration"));
+	}	
+	
+	
 	@Test
-	public void testAddAdminFail() throws IOException {
-		MockitoAnnotations.initMocks(this);
+	public void testUserLogInByNameAndPasswordUnSuccessul() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
-		
-		Set<String> admins = new HashSet<>();
-		admins.add("jojo");
+		when(userRepository.checkIfUserExists("gogog")).thenReturn(false);
+		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(false);
 
-		HashMap<String, String> sessionsUsers = new HashMap<>();
-		sessionsUsers.put("1", "gogo");
-		
-		when(dataOrg.getSessionsUsers()).thenReturn(sessionsUsers);
+		String message = domain.logInByNameAndPassword("gogog", "1234", socketChannel);
 
-
-		when(dataOrg.getAdmins()).thenReturn(admins);
-		String message = domainModel.addAdmin("gogo", "jojo", "1", socketChannel);
-		assertEquals(message, "unsuccessfully made admin");
-		
+		assertTrue(message.contains("unsuccessful login"));
 	}
 
 	@Test
-	public void testRemoveAdminNotLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
+	public void testUserLogInByNameAndPasswordUnSuccessulBecauseUserIsBlocked() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(false);
-		String message = domainModel.removeAdmin("gogo", "jojo", "1", socketChannel);
-		assertEquals(message, "not logged in");
-		
+		when(userRepository.checkIfUserExists("gogog")).thenReturn(true);
+		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(true);
+
+		String message = domain.logInByNameAndPassword("gogog", "1234", socketChannel);
+
+		assertTrue(message.contains("You are blocked"));
 	}
 
 	@Test
-	public void testRemoveAdminLoggedIn() throws IOException {
-		MockitoAnnotations.initMocks(this);
+	public void testLogInUnSuccessfullyBecauseUserIsBlocked() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		AuditLog logger = new AuditLog();
-		when(dataOrg.getLogger()).thenReturn(logger);
-		when(dataOrg.isUserLoggedIn("1")).thenReturn(true);
+		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
+		when(userRepository.getUser("gogog")).thenReturn(user);
+		when(userRepository.getUser("gogog").getLoginFailed()).thenReturn(3);
 		
-		Set<String> admins = new HashSet<>();
-		admins.add("gogo");
-
-		HashMap<String, String> sessionsUsers = new HashMap<>();
-		sessionsUsers.put("1", "gogo");
+		String result = domain.logInUnSuccessfully("gogog", socketChannel);
 		
-		when(dataOrg.getSessionsUsers()).thenReturn(sessionsUsers);
-
-
-		when(dataOrg.getAdmins()).thenReturn(admins);
-		String message = domainModel.removeAdmin("gogo", "jojo", "1", socketChannel);
-		assertEquals(message, "successfully removed admin");
-		
+		assertTrue(result.contains("You are blocked"));
 	}
 
+	@Test
+	public void testLogInUnSuccessfully() throws IOException {
+		SocketChannel socketChannel = SocketChannel.open();
+		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
+		when(userRepository.getUser("gogog")).thenReturn(user);
+		when(userRepository.getUser("gogog").getLoginFailed()).thenReturn(2);
+		
+		String result = domain.logInUnSuccessfully("gogog", socketChannel);
+		
+		assertEquals(result,"unsuccessful login");
+	}	
+	
+	@Test
+	public void testLogInSuccessfully() throws IOException {
+		SocketChannel socketChannel = SocketChannel.open();
+		Session session = new Session();
+		when(userRepository.getUser("gogog")).thenReturn(user);
+		when(sessionRepository.getSession(anyString())).thenReturn(session);
+		String result = domain.logInSuccessfully("gogog", socketChannel);
+		
+		assertTrue(result.contains("successful login with"));
+	}	
+	
+	@Test
+	public void testUserLogInByNameAndPasswordSuccessul() throws IOException {
+		String password = "1234";
+		SocketChannel channel = SocketChannel.open();
+		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
+		Session session = new Session();
+		when(userRepository.checkIfUserExists("gogog")).thenReturn(true);
+		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(false);
+		when(userRepository.getUserPassword("gogog")).thenReturn(password);
+		when(userRepository.getUser("gogog")).thenReturn(user);
+		when(sessionRepository.getSession(anyString())).thenReturn(session);
+
+		String message = domain.logInByNameAndPassword("gogog", password, channel);
+
+		assertTrue(message.contains("successful login with"));
+	}
+
+	@Test
+	public void testUserLogInByNameAndPasswordUnSuccessulBecauseOfWrongPassword() throws IOException {
+		String password = "1234";
+		SocketChannel channel = SocketChannel.open();
+		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class, Mockito.RETURNS_DEEP_STUBS);
+		when(userRepository.checkIfUserExists("gogog")).thenReturn(true);
+		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(false);
+		when(userRepository.getUserPassword("gogog")).thenReturn("12");
+		when(userRepository.getUser("gogog")).thenReturn(user);
+
+		String message = domain.logInByNameAndPassword("gogog", password, channel);
+
+		assertTrue(message.contains("unsuccessful login"));
+	}
+	
+	@Test
+	public void testUserLogInBySessionUnsuccessful() throws IOException {
+		SocketChannel socketChannel = SocketChannel.open();
+		SessionRepository sessionRepository = Mockito.mock(SessionRepository.class);
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.logInBySession("1", socketChannel);
+		
+		assertEquals("unsuccessful login", result);
+	}
+
+	@Test
+	public void testUserLogInBySessionSuccessful() throws IOException {
+		SocketChannel socketChannel = SocketChannel.open();
+		String sessionID = "123";
+		when(sessionRepository.isUserLoggedIn(sessionID)).thenReturn(true);
+		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
+		when(sessionRepository.getSessionUsername(sessionID)).thenReturn("gogo");
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		
+		String result = domain.logInBySession(sessionID, socketChannel);
+		
+		assertTrue(result.contains("successful login with "));
+	}
+	
+	@Test
+	public void testResetPasswordNotLoggedIn() throws IOException {
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.resetPassword("1", "gogo", "1234", "12345", SocketChannel.open());
+		
+		assertEquals("not logged in", result);
+	}
+
+	@Test
+	public void testResetPasswordSuccessfully() throws IOException {
+
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getPassword()).thenReturn("1234");
+		when(channelsByUsername.get(anyObject())).thenReturn("gogo");
+		
+		String result = domain.resetPassword("1", "gogo", "1234", "12345", SocketChannel.open());
+		
+		assertEquals("successfully changed password", result);
+	}
+
+	@Test
+	public void testResetPasswordUnsuccessfullyWhenUserDoesntExists() throws IOException {
+
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(false);
+		
+		String result = domain.resetPassword("1", "gogo", "1234", "12345", SocketChannel.open());
+		
+		assertEquals("unsuccessfully changed password", result);
+	}
+
+	@Test
+	public void testResetPasswordUnsuccessfullyWhenOldPasswordIsTypedWrong() throws IOException {
+
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getPassword()).thenReturn("12345");
+		when(channelsByUsername.get(anyObject())).thenReturn("gogo");
+		
+		String result = domain.resetPassword("1", "gogo", "1234", "12345", SocketChannel.open());
+		
+		assertEquals("unsuccessfully changed password", result);
+	}
+	
+	@Test
+	public void testUpdateUserUnsuccessfullyWhenNotLoggedIn() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.updateUser("1", "gogo", "new-username", "12345");
+		
+		assertEquals("not logged in", result);
+	}
+
+	@Test
+	public void testUpdateUserSuccessfullyWithNewUsername() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("1");
+		when(userRepository.getUser("gogo1")).thenReturn(user);
+		
+		String result = domain.updateUser("1", "gogo", "new-username", "gogo1");
+		
+		assertEquals("successful update", result);
+	}
+
+	@Test
+	public void testUpdateUserSuccessfullyWithNewFirstname() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("1");
+		when(userRepository.getUser("gogo1")).thenReturn(user);
+		
+		String result = domain.updateUser("1", "gogo", "new-firstname", "gogo1");
+		
+		assertEquals("successful update", result);
+	}
+
+	@Test
+	public void testUpdateUserSuccessfullyWithNewLastname() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("1");
+		when(userRepository.getUser("gogo1")).thenReturn(user);
+		
+		String result = domain.updateUser("1", "gogo", "new-lastname", "gogo1");
+		
+		assertEquals("successful update", result);
+	}
+
+	@Test
+	public void testUpdateUserSuccessfullyWithNewEmail() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("1");
+		when(userRepository.getUser("gogo1")).thenReturn(user);
+		
+		String result = domain.updateUser("1", "gogo", "new-email", "gogo1");
+		
+		assertEquals("successful update", result);
+	}
+
+	@Test
+	public void testUpdateUserUnsuccessfullyWhenUserDoesntExists() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(false);
+		
+		String result = domain.updateUser("1", "gogo", "new-email", "gogo1");
+		
+		assertEquals("unsuccessful update", result);
+	}
+
+	@Test
+	public void testUpdateUserUnsuccessfullyWhenUserDoesntHaveActiveSession() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("2");
+		
+		String result = domain.updateUser("1", "gogo", "new-email", "gogo1");
+		
+		assertEquals("unsuccessful update", result);
+	}
+
+	@Test
+	public void testLogoutWhenUserNotLoggedIn() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.logout("1", "gogo");
+		
+		assertEquals("not logged in", result);
+	}
+
+	@Test
+	public void testLogoutWhenUsernameNotRight() {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		
+		
+		String result = domain.logout("1", "gogo1");
+		
+		assertEquals("unsuccessful logout", result);
+	}
+
+	@Test
+	public void testLogoutSuccess() {
+		Map<String, Session> sessions = new HashMap<>();
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		when(sessionRepository.getSessions()).thenReturn(sessions);
+		when(userRepository.getUser("gogo")).thenReturn(user);
+		
+		String result = domain.logout("1", "gogo");
+		
+		assertEquals("login again", result);
+	}
+
+	@Test
+	public void testAddAdminWhenUserNotLoggedIn() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.addAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("not logged in", result);
+	}
+
+	@Test
+	public void testAddAdminWhenUserDoesNotHaveAdminRights() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(false);
+		
+		String result = domain.addAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("unsuccessfully made admin", result);
+	}
+
+	@Test
+	public void testAddAdminWhenSessionIsWrong() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		
+		String result = domain.addAdmin("gogo1", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("unsuccessfully made admin", result);
+	}
+
+	@Test
+	public void testAddAdminSuccessfully() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		
+		String result = domain.addAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("successfully made admin", result);
+	}
+	
+	@Test
+	public void testRemoveAdminWhenUserNotLoggedIn() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.removeAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("not logged in", result);
+	}
+	
+	@Test
+	public void testRemoveAdminWhenUserDoesNotHaveAdminRights() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(false);
+		
+		String result = domain.removeAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("unsuccessfully removed admin", result);
+	}
+
+	@Test
+	public void testRemoveAdminSuccessfully() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		
+		String result = domain.removeAdmin("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("successfully removed admin", result);
+	}
+
+	@Test
+	public void testDeleteUserWhenUserNotLoggedIn() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
+		
+		String result = domain.deleteUser("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("not logged in", result);
+	}
+	
+	@Test
+	public void testDeleteUserWhenUserDoesNotHaveAdminRights() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(false);
+		
+		String result = domain.deleteUser("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("unsuccessfully deleted user", result);
+	}
+
+	@Test
+	public void testDeleteUserSuccessfully() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		when(userRepository.getUser("tosho")).thenReturn(user);
+		when(user.getSessionID()).thenReturn("1");
+		
+		String result = domain.deleteUser("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("successfully deleted user", result);
+	}
+
+	@Test
+	public void testDeleteUserSuccessfullyWhenDeletedUserIsNotLoggedIn() throws IOException {
+		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
+		when(userRepository.checkIfUserIsAdmin("gogo")).thenReturn(true);
+		when(sessionRepository.getSessionUsername("1")).thenReturn("gogo");
+		when(userRepository.getUser("tosho")).thenReturn(user);
+		when(user.getSessionID()).thenReturn(null);
+		
+		String result = domain.deleteUser("gogo", "tosho", "1", SocketChannel.open());
+		
+		assertEquals("successfully deleted user", result);
+	}
+
+	
 }
