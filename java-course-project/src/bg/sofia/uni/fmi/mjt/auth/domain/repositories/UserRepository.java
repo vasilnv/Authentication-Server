@@ -144,7 +144,7 @@ public class UserRepository {
 		this.admins.add(username);
 	}
 
-	public void checkIfAnyAdminsExist(String username) {
+	public void addAdminIfNoAdminExists(String username) {
 		if (this.getAdmins().isEmpty()) {
 			addAdmin(username);
 		}

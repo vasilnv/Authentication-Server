@@ -79,7 +79,7 @@ public class Domain {
 			mapChannelsUsernames(socketChannel, username);
 			userRepository.addUser(username, newUser);
 			userRepository.writeUserInFile(username, newUser);
-			userRepository.checkIfAnyAdminsExist(username);
+			userRepository.addAdminIfNoAdminExists(username);
 			result = "completed registration with sessionId: " + session.getId();
 		} else {
 			result = "unsuccessful registration";
@@ -102,7 +102,7 @@ public class Domain {
 		return result;
 	}
 
-	private String logInSuccessfully(String username, SocketChannel socketChannel) {
+	public String logInSuccessfully(String username, SocketChannel socketChannel) {
 		Session session = new Session();
 		sessionRepository.addSession(session);
 		userRepository.getUser(username).setSession(session.getId());
@@ -113,7 +113,7 @@ public class Domain {
 		return result;
 	}
 
-	private String logInUnSuccessfully(String username, SocketChannel socketChannel) {
+	public String logInUnSuccessfully(String username, SocketChannel socketChannel) {
 		userRepository.getUser(username).incrementloginFailed();
 		if (userRepository.getUser(username).getLoginFailed() == 3) {
 			userRepository.getUser(username).block();
@@ -147,7 +147,7 @@ public class Domain {
 				&& this.channelsByUsername.get(socketChannel).equals(username)
 				&& userRepository.getUser(username).getPassword().equals(oldPassword)) {
 			userUpdater.changePassword(username, newPassword);
-			result = "succesfully changed password";
+			result = "successfully changed password";
 		} else {
 			result = "unsuccessfully changed password";
 		}
@@ -175,7 +175,7 @@ public class Domain {
 			}
 			result = "successful update";
 		} else {
-			result = "unsuccesful update";
+			result = "unsuccessful update";
 		}
 		return result;
 	}
@@ -245,7 +245,7 @@ public class Domain {
 			}
 			userRepository.removeAdmin(usernameToDelete);
 			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToDelete, true);
-			result = "succesfully deleted user";
+			result = "successfully deleted user";
 		} else {
 			this.logger.writeConfigChangeFinish(socketChannel, currUsername, usernameToDelete, false);
 			result = "unsuccessfully deleted user";
