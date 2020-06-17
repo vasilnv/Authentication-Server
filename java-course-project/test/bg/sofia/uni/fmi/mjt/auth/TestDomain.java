@@ -61,11 +61,10 @@ public class TestDomain {
 	@Test
 	public void testRegisterInSystemSuccessfully() throws IOException {
 		SocketChannel channel = SocketChannel.open();
-		AuthenticatedUser user1 = Mockito.mock(AuthenticatedUser.class);
-		when(user1.getUsername()).thenReturn("gogo");
+		when(user.getUsername()).thenReturn("gogo");
 		when(userRepository.checkIfUserExists("gogo")).thenReturn(false);
 		
-		String result = domain.registerInSystem(channel, user1);
+		String result = domain.registerInSystem(channel, user);
 		
 		assertTrue(result.contains("completed registration"));
 	}	
@@ -96,7 +95,6 @@ public class TestDomain {
 	@Test
 	public void testLogInUnSuccessfullyBecauseUserIsBlocked() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
 		when(userRepository.getUser("gogog")).thenReturn(user);
 		when(userRepository.getUser("gogog").getLoginFailed()).thenReturn(3);
 		
@@ -108,7 +106,6 @@ public class TestDomain {
 	@Test
 	public void testLogInUnSuccessfully() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
 		when(userRepository.getUser("gogog")).thenReturn(user);
 		when(userRepository.getUser("gogog").getLoginFailed()).thenReturn(2);
 		
@@ -132,7 +129,6 @@ public class TestDomain {
 	public void testUserLogInByNameAndPasswordSuccessul() throws IOException {
 		String password = "1234";
 		SocketChannel channel = SocketChannel.open();
-		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
 		Session session = new Session();
 		when(userRepository.checkIfUserExists("gogog")).thenReturn(true);
 		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(false);
@@ -149,7 +145,6 @@ public class TestDomain {
 	public void testUserLogInByNameAndPasswordUnSuccessulBecauseOfWrongPassword() throws IOException {
 		String password = "1234";
 		SocketChannel channel = SocketChannel.open();
-		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class, Mockito.RETURNS_DEEP_STUBS);
 		when(userRepository.checkIfUserExists("gogog")).thenReturn(true);
 		when(userRepository.checkIfUserIsBlocked("gogog")).thenReturn(false);
 		when(userRepository.getUserPassword("gogog")).thenReturn("12");
@@ -163,7 +158,6 @@ public class TestDomain {
 	@Test
 	public void testUserLogInBySessionUnsuccessful() throws IOException {
 		SocketChannel socketChannel = SocketChannel.open();
-		SessionRepository sessionRepository = Mockito.mock(SessionRepository.class);
 		when(sessionRepository.isUserLoggedIn("1")).thenReturn(false);
 		
 		String result = domain.logInBySession("1", socketChannel);
@@ -176,7 +170,6 @@ public class TestDomain {
 		SocketChannel socketChannel = SocketChannel.open();
 		String sessionID = "123";
 		when(sessionRepository.isUserLoggedIn(sessionID)).thenReturn(true);
-		AuthenticatedUser user = Mockito.mock(AuthenticatedUser.class);
 		when(sessionRepository.getSessionUsername(sessionID)).thenReturn("gogo");
 		when(userRepository.getUser("gogo")).thenReturn(user);
 		
@@ -197,7 +190,6 @@ public class TestDomain {
 
 	@Test
 	public void testResetPasswordSuccessfully() throws IOException {
-
 		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
 		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
 		when(userRepository.getUser("gogo")).thenReturn(user);
@@ -211,7 +203,6 @@ public class TestDomain {
 
 	@Test
 	public void testResetPasswordUnsuccessfullyWhenUserDoesntExists() throws IOException {
-
 		when(userRepository.checkIfUserExists("gogo")).thenReturn(false);
 		
 		String result = domain.resetPassword("1", "gogo", "1234", "12345", SocketChannel.open());
@@ -221,7 +212,6 @@ public class TestDomain {
 
 	@Test
 	public void testResetPasswordUnsuccessfullyWhenOldPasswordIsTypedWrong() throws IOException {
-
 		when(userRepository.checkIfUserExists("gogo")).thenReturn(true);
 		when(sessionRepository.isUserLoggedIn("1")).thenReturn(true);
 		when(userRepository.getUser("gogo")).thenReturn(user);
@@ -464,6 +454,4 @@ public class TestDomain {
 		
 		assertEquals("successfully deleted user", result);
 	}
-
-	
 }
